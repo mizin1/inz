@@ -60,9 +60,33 @@ Powiązany z konkretną jednostką organizacyjną, ma możliwość wykonywania o
 \subsubsection{Administrator systemu}
 Ma możliwość wykonywania operacji na jednostkach organizacyjnych oraz zarządzania administratorami jednostek(ich dodawanie, usuwanie oraz przydzielanie uprawnień). Ma uprawnienia administratora jednostki dla wszystkich jednostek organizacyjnych.
 
-\section[Przypadki urzycia][Przypadki urzycia]{Przypadki urzycia}
+\section[Przypadki użycia][Przypadki użycia]{Przypadki użycia}
+Jednym z etapów modelowania aplikacji jest określenie przypadków użycia(ang. \textit{Use Case}). Przypadkami użyciamy nazywamy funkconalności systemu z punktu widzenia użytkownika. Przypadki użycia mogą się w sobie zawierać oraz się rozszerzać. Z punktu widzenia przejrzystości dokumentacji dobrą praktyką jest numerowanie przypadków użycia.
 
+\subsection[Diagram przypadków użycia][Diagram przypadków użycia]{Diagram przypadków użycia}
+Diagram przypadków użycia jest graficzną formą ich prezentacji. Zawiera on jedynie aktorów oraz funkcjonalności modelowane systemu. Nie dostarcza informacji o sposobie realizacji tych funkcjonalności. Na rysunkach ... zamieszczono TODO.
 
+\subsection[Scenariusze przypadków użycia][Scenariusze przypadków użycia]{Scenariusze przypadków użycia}
+Wiecej informacji o poszczególnych funkcjonalnościach system dostarczają scenariusze przypadków użycia. Opisują one w sposó słowny aktorów biorących w danych przypadku oraz warunki wstępne oraz końcowe. Opisują też szcegółowo interakcję pomiędzy użytkownikiem a systemem. Wyróżnić można dwie formy takiego opisu: opis w postaci ciągłego tekstu oraz listę kroków. Poniżej przykład scenariusz dla przypradku dodawania pracownika:
+
+\subsubsection{UC-101 Dodawanie pracownika}
+\begin{tabular}{ll}
+	\textbf{Aktorzy:} & Administrator jednostki \\
+	\textbf{Warunek początkowy:} & Użytkownik zalogowany w systemie \\
+	\textbf{Warunek końcowy:} & Nowy pracownik zapisany w systemie \\
+	\multicolumn{2}{l}{\textbf{Scenariusz głowny:}}\\
+	\multicolumn{2}{l}{
+	\begin{minipage}{\textwidth}\begin{enumerate}
+		\item Użytkownik wybiera opcję "Dodaj nowego pracownika".
+		\item System wyświetla formularz dadawania użytkownika.
+		\item Użytkownik wypełnia formularz.
+		\item Użytkownik potwierdza przesłanie formularza przyciskiem "Wprowadź". sdfiusdhfpuiashfpuiadshfiuashfiuhfiusdahfiupsa
+		\item System sprawdza poprawność wprowadzonych danych.
+		\item System zapisuje dane nowego pracownika
+	\end{enumerate}\end{minipage}
+	}
+\end{tabular}
+	
 \section[Prototypowanie][Prototypowanie]{Prototypowanie}
-TODO opsi + obrazek
+TODO opis + przykładowa makieta
 
