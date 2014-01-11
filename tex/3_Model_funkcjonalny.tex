@@ -1,0 +1,14 @@
+\chapter{Model funkcjonalny}
+Poniższy rozdział opisuje proces projektowania aplikacji. Przede wszystkim określa profil odbiorcy sytemu. Prezentuje też wszytkie wymagania jak i założenia poczynione w trakcie ich analizy.
+
+\section[Profil odbiorcy systemu][Profil odbiorcy systemu]{Profil odbiorcy systemu}
+Potrzeba stworzenia systemu do obsługi umów cywilno-prawnych powstała na Politechnice Warszawskiej a dokładniej w Ośrodku Kształcenia na Odległość. Początkowa miała ona obsługiwać jedynie umowy zlecenia jednak zdecydowano się ją rozszerzyć również na umowy o dzieło(stąd ogólna nazwa umowy cywilno-prawne). Podczas procesu projektowania starano się jednak aby model był nie tylko dostowsowany do specyfiki uczelni ale też jak najbardziej ogólny, tak aby potencjalnym odbiorcą aplikacji mogły być nie tylko uczelne ale i inne instytucje o podobnej organizacji a nawet małe firmy.
+
+\section[Opis funkcjonalności][Opis funkcjonalności]{Opis funkcjonalności}
+
+\subsection[Pracownicy][Pracownicy]{Pracownicy}
+Aplikacja powinna umożliwiać przecowywanie danych o osobach zatrudnianych na umowach cywilno-prawnych, zwanych dalej potcznie pracownikami(nie są to pracownicy w rozumieniu kodeksu pracy). Podstawowymi operacjami jakie można wykonać jest jego dodanie, modyfikacja oraz usunięcie(ale tylko w przypadku gdy nie ma on podpisanej żadnej umowy). Dodatkowymi funkconalnościami są wyszukiwanie pracownika za pomocą imienia i nazwiska oraz możliwość wyświetlenia listy wszystkich pracowników.
+
+Aplikacja bedzie gromadzić wszystkie informacje niezbędne jego jednoznaczej identyfikacj, umieszczane na umowach oraz niezbędne w celach podatkowych: nazwisko, imiona(z wyróżnieniem pierwszego imienia), adresy(przy czym należy zwrócić uwagę, że adres wykożystywany w celach podatkowych może różnić się od adresu korespondencyjnego), datę i miejsce urodzenia, płeć, obywatelstwo(aplikacja powinna udostępniąć wybór z listy możliwych państw), numery pesel i NIP, numer dowodu osobistego lub paszportu oraz numer konta. Dodatkowo system powienien przechowywać informację o urzędzie skarbowym(jego nazwę i adres) właściwym dla pracownika. Dane urzędu skarbowego powinny być przechowywane niezależnie od danych pracownika tak aby np. w przypadku zmiany adresu jednego z urzędów nie wystęþowała konieczność ręczniej aktualizacji wszystkich odpowiadających mu pracowników a jedynie pojedyncza modyfikacja danych urzędu skarbowego.
+
+%
