@@ -1,0 +1,96 @@
+\chapter{Technologie wykorzystane w aplikacji}
+Poniższy rozdział opisuje opsuje wewnętrzną architekturę aplikacji. Zwraca uwagę na jej wielowarstwowy charackter. Dla każdej z warstw opsisuje dość technologie w których dana warstwa może być realizowana zwracając szczególną uwagę na te, które zostały wybrane do jej faktycznej implementacji.
+
+%TODO mozna dać słówko o webowym charakterze aplikacji
+
+%TODO zrobić jednak ten wstep o architekturze
+\section{TODO ogólnie o architekturze trójwarstwowej}
+\begin{comment}
+\section[Aplikacja w architekturze wielowarstwowej][Aplikacja w architekturze wielowarstwowej]{Aplikacja w architekturze wielowarstwowej}
+\subsection[Model klient-serwer][Model klient-serwer]{Model klient-serwer}
+Najprostrzym wielowarswowej architektury aplikacji jest model typu klient-serwer. Wyróżnia on dwie warstwy:
+\begin{itemize}
+	\item klienta, stronę żądającą dostępu do jakiejś usługi bądź zasobu,
+	\item serwera, stronę udostępniająca daną usługę lub zasób.
+\end{itemize}
+Architektura ta dobrze sprawdzająca
+\section{}
+Tworzony system będzie działał w architekturze trójwarstwowej. Architektura ta wyewoluowała z architektury typu klient-serwer
+
+\end{comment}
+\section[Warstwa prezentacji][Warstwa prezentacji]{Warstwa prezentacji}
+Warstwa prezentacji stanowi interfejs miedzy użytkownikiem a systemem. Najbardziej podstawową implementacją tej warswy jest terminal znakowy. Funkcje taką może pełnić również aplikacja okienkowa. W przypadku aplikacji webowych(takich jak ta) warstwa ta jest realizowana w przeglądarce internetowej za pomocą typowych technologii(takich jak HTML, CSS czy JavaScript).
+
+\subsection[HTML][HTML]{HTML}
+Podstawową technologią wyjorzystywaną do tworzenia widoków aplikacji internetowych jest język znaczników HTML(ang. \textit{Hypertext Markup Language}). Najważniejszą jego zaletą jest przenośność. Zyskujemy dzięki temu niezależność interfejsu od środowiska użytkownika. Niestety sposób prezentacji wciąż zależy jednak(w niewielkim stopniu) od przeglądarki, więc jednym z etapów projektu powinno być zawsze założenie jakie przeglądarki i od jakiej wersji będą przez nas wspieranie. Należy też pamiętąć że standard HTML również podlega wersjonowaniu, co oznacza konieczność upewnienia się wpierana przez nas przeglądrka obsługuje HTML w jego najnowszej - piętej wersji. W przeciwnym wypdadku musimy ograniczyć się do funkcjonalności z wersji wcześniejszych.
+
+Kolejną zaletą języka znaczników jest jego prostota, dzięki której nawet początkujący web-designerzy są w stanie szybko nauczyć się pisania kodu HTML.
+
+Wadą języka HTML jest jego statyczność, nawet najmniejsza zmiana na stronie wymaga ponownego wygenerowania żądania HTTP i przesłania go do serwera. Wpływa to negatywnie na responsywność aplikacji, szczególnie przy dużym obciążeniu. 
+%Zdanie z SDI troche bez sensu ale mozna podrasowac
+%Rozwiązaniem tego problemu są technologie takie jak np. AJAX, które generują kod wykonywany na poziomie przeglądarki, bez konieczności ponownego przesyłania żądania.
+
+\subsection[CSS][CSS]{CSS}
+W języku HTML możliwe jest wskazanie sposobu wyświetlania informacji, zaleca się jednak aby treść dokumentu była odseparowana od sposobu jej prezentacji. Umożliwiają to kaskadowe arkusze stylów(CCS). Pozwalają one wydzielenie opisu sposobu prezentacji do specjalnych plików. Zastsowwanie tzw. selektorów możliwe jest zdefiniowanie jednolitego stylu dla całej aplikacji. Łatwiejsze staje się też zarządzanie jej wyglądem.
+
+\subsection[JavaScript][JavaScript]{JavaScript}
+JavaScript jest językiem skryptowym wykonywanym po stronie przeglądarki. Pozwala na cześciowe ominięcie problemu statyczności dokumentu HTML. Zastosowanie JavaScriptu pozwala osiągnąc większą responsywność stron internetowych. Do typowych jego zastosowań należy obsługa dynamicznych elementów aplikacji (takich jak okna dialogowe) czy wstępna walidacja formularzy. Za pomocą JavaScriptu możemy też manipulować drzewem DOM dokumentu HTML.
+
+\subsection[AJAX][AJAX]{AJAX}
+AJAX(ang. \textit{Asynchronous JavaScript and XML}) jest to wieloelemntowa technologia pozwalająca na twierzenie kodu wykonującego się w całości po stronie klienta bez konieczmności przeładowywania stron. Daje ona możliwość wysyłania asynchronicznych zapytań do serwera. Pozwala to rozwiązać problem statyczności kodu HTML i daje możliwość tworzenia stron w pełni dynamicznych. Rozwiązanie to ma jednakt też kilka wad:
+\begin{itemize}
+	\item utrudnione zarządzanie historią w przeglądarce(mechanizmy pozwalające rozwiązać ten problem pojawiły dopiero w HTML5),
+	\item długi czas ładowania aplikacji(szczególnie w przypadku wolnych łącz).
+\end{itemize}
+Oprócz wposmnianych wcześniej HTML'a, CSS'a i JavaScriptu w sład technologii AJAX wchodzą również:
+\begin{itemize}
+	\item XMLHttpRequest, klasa umożliwiająca asynchroniczne przesyłanie danych,
+	\item XML(ang. \textit{Extensible Markup Language}), język znaczników pozwalający na przesyłanie informacji między klientem a serwerem, wykorzystuje się również inne typy danych np. JSON(\textit{JavaScript Object Notation})).
+\end{itemize}
+Oczywiście korzystanie z AJAX'a nie zmusza programisty do rezygnacji z tradycyjnych żądań HTTP. Bardzo często można spotkać aplikacje, które wiekszość swoich zapytań realizują synchronicznie a asynchroniczne zapytania wykorzystują jedynie tam gdzie ma znaczenie responsywność aplikacji.
+
+\subsection[Dojo Toolkit][Dojo Toolkit]{Dojo Toolkit}
+Dojo Toolkit jest zestawem narzędzi opartym na języku JavaScript. składa sie on z trzech podstawowych pakietów.
+
+\subsubsection[dojo][dojo]{dojo}
+Jest to główna częścć zestawu narzedziowego Dojo Toolkit. Zawiera ona najbardziej ogólne moduły pozwaljące na komunikację z serwerem za pomocą technologii AJAX, manimpulację dzrzewm DOM czy biblioteki służace do internacjonalizaci.
+
+\subsubsection[dijit][dijit]{dijit}
+Jest to zestaw standardowych komponentów interfejsu użytkownika tzw. widżetów (ang. \textit{widgets}) zbudowanych z wykorzystaniem narzędzi z pakietu dojo(Miedzy innymi okien dialogowych czy tooltipów). Na wyróżnie zasługuje pakiet dijit.form zawierający elementy do budowy i walidacji formularzy.
+ 
+\subsubsection[dojox][dojox]{dojox}
+Jest to zestaw skomplikowanych widżetów i funkcji, zbudowanych na podstawie pakietów dojo i dijit. Pozwalają między innymi na tworzenie zawansowanych efektów graficznych czy wizualizacje danych w postaci wykresów.
+ 
+\section[Warstwa aplikacji][Warstwa aplikacji]{Warstwa aplikacji}
+Warstwa aplikacji bywa też czasem nazywna warstwą logiki biznesowej. Jej podstawowym zadaniem jest pośredniczenie pomiędzy warstwą prezentacji a warstwą źródła danych. Odpowiada ona zarówno za odczyt danych i przekazanie ich do wyświetlenia przez użytkownika, jak i za ich zapis. Realizuje przy tym często skomplikowaną logikę biznesową.
+
+\subsection[Język programowania][Język programowania]{Język programowania}
+Podstawowym decyzją jaką musi dokonać projektant systemu jest wybór jęzka programowania. Determinuje on późnieszy wybór bibloiotek jakie zostaną użyte do tworzenia aplikacji. Ma też wpływ na komfort pracy deweloperów.
+
+\subsubsection{Java}
+Java jest językiem w pełni obiektowym. Do swojego działania potrzebuje maszyny wirtualnej, która jest dostępna dla większości(o ile nie dla wszystkich) obecnie spotykanych systemów operacyjnych, co zapewnia przenośność napisanych w niej apliakcji. Istnieje mnóstwo bibliotek ułatwiających pracę w tym języka, z których większość jest dostępna za darmo. Sam jezyk jest rozwijany przez Oracle Corporation, które wykupiło jego oryginalnego twórcę - Sun Microsystems.
+
+\subsubsection{JEE}
+Java Enterprise Edition jest rozszerzeniem standardowej platformy języka Java(tzw. Java Standard Edition). Przeznaczona jest ona do aplickacji korporacyjnych. Podstawowym założeniem tej platformy jest osadzenie komponentów biznesowych na tzw. serwerze aplikacji(przykładem takiego serwera jest Apache Tomcat). Standardowym zadaniem serwera aplikacji jest praca na poziomie żądań HTTP(ang. \textit{Hypertext Transfer Protocol}), tzn. obsługa żądań oraz wysyłanie odpowiedzi.
+
+\subsubsection{C\#}
+Podobne funkcje jak Java może pełnić język C\# firmy Microsoft. Dzięki środowisku .NET nadaje się równierz do tworzenia aplikacji internetowych. Pomimo iż twórca języka zapewnia o jego przenośności działa on najlepiej na systemach z rodziny Windows. Mimo iż na rynku jest sporo nażedzi ułatwiających programowanie w tym języku, są one w wiekszości płatne.
+
+\subsubsection{}
+Do napisania aplikacji został wybrany język Java oraz platforma JEE. Ich też będą dotyczyć technologie opisywanie dalej w tym rozdziale.
+
+\subsection[Serwlety][Serwlety]{Serwlety}
+Posdstawowym komponentem realizującym założenia jakie stawia standard JEE jest serwlet. Wszystkie elementy, z których korzystamy tworząc aplikacje webowe(np. strony jsp) są zawsze ostatecznie kompilowane do postaci serwletów. Również frameworki służące do budowania aplikacji internetowych bazują na serwletach.
+
+W ogólniści serwlet nie jest niczym innym jak klasą Javy implementująca interfejs Servlet. W praktycie spotyka się częściej serwelty dziedziczące z abstrackcyjnej klasy HttpServlet. Typowym działaniem takiego serwletu jest obsługa żądań HTTP oraz generowanie odpowiedzi. Zarówno żądanie jak i odpowiedź są oczywiście obudowne w odpowiednie klasy, ale o to dba już sam serwer aplikacji. Zadaniem serwera jest również przekazanie requestu do serwletu(wywołanie jego odpowiedniej metody) jak i odesłanie zwróconej przez serwlet odpowiedzi.
+
+\subsection[ObjectLedge][ObjectLedge]{ObjectLedge}
+ObjectLedge jest szekieletem aplikacji(ang. \textit{framework}) bazującym na mechaniźmie serwletów. Upraszcza on tworzenie aplikacji internetowych dostarczając szeregu narzędzi do realizacji typowych zadań. 
+
+
+
+
+
+
+
+
