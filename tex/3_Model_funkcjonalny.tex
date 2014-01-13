@@ -11,12 +11,12 @@ Aplikacja powinna umożliwiać przecowywanie danych o osobach zatrudnianych na u
 
 Aplikacja bedzie gromadzić wszystkie informacje niezbędne jego jednoznaczej identyfikacji, umieszczane na umowach oraz potrzebne w celach podatkowych: nazwisko, imiona(z wyróżnieniem pierwszego imienia), adresy(przy czym należy zwrócić uwagę, że adres wykożystywany w celach podatkowych może różnić się od adresu korespondencyjnego), datę i miejsce urodzenia, płeć, obywatelstwo(aplikacja powinna udostępniąć wybór z listy możliwych państw), numery pesel i NIP, numer dowodu osobistego lub paszportu oraz numer konta. Dodatkowo system powienien przechowywać informację o urzędzie skarbowym(jego nazwę i adres) właściwym dla pracownika. Dane urzędu skarbowego powinny być przechowywane niezależnie od danych pracownika tak aby np. w przypadku zmiany adresu jednego z urzędów nie wystęþowała konieczność ręczniej aktualizacji wszystkich odpowiadających mu pracowników a jedynie pojedyncza modyfikacja danych urzędu skarbowego. Podczas wprowadzania badź modyfikacji danych pracownika użytkownik powinien mieć możliwość wyboru z listy wcześniej zdefiniowanych urzędów skarbowych lub dodania nowego w przypadku jego braku na liście.
 
-Istotnym elementem danych pracownika jest informacja jakie sładki ubezpieczeń będzie musiał odprowadzać od potencjalnie podpisanych umów. Aplikacja powinna przechowywać informacje o jego statusie z punktu widzenia umów cywilno prawnych(opisanym w \ref{przykladyOsob}). Powinna też wspomoagać użytkownika w trakcie wyboru statusu - wyświetlać ich szczegółowe opisy oraz powiązane z nimi składki ubezpieczeń. Jeśli dla Te informacje powinny zawierać również raporty prezentujące dane pracownika. Lista dostępnych statusów jest zdefiniowana w momencie instatalacji, nie możliwości jej edycji za pomocą aplikacji.
+Istotnym elementem danych pracownika jest informacja jakie sładki ubezpieczeń będzie musiał odprowadzać od potencjalnie podpisanych umów. Aplikacja powinna przechowywać informacje o jego statusie z punktu widzenia umów cywilno prawnych(opisanym w \ref{przykladyOsob}). Powinna też wspomoagać użytkownika w trakcie wyboru statusu - wyświetlać ich szczegółowe opisy oraz powiązane z nimi składki ubezpieczeń. Te informacje powinny być również zawarte w raportachprezentujących dane pracownika. Lista dostępnych statusów jest zdefiniowana w momencie instatalacji, nie możliwości jej edycji za pomocą aplikacji.
 
 \subsection[Struktura organizacyjna][Struktura organizacyjna]{Struktura organizacyjna}
 Struktura organizacyjna uczelni podobnie jak struktura organizacyjna wielu innych instytucji ma formę drzewa. Dla prawie każdej jednostki organizcyjnej można wskazać jednostkę nadrzędną(Wyjątkiem jest jednostka będąca korzeniem drzewa, z reguły jest to sama organizacja, np konkretna uczelnia). Ponadto jednostki na poszczególnych poziomach drzewa posiadają swoje typy. W przypadku Politechniki Warszawskiej są to np. uczelnia, wydział, instytut i zakład. Nie jest jednak wymogiem aby na jednym poziomie drzewa znajdowały się jednostki tylko jednego typu. Na przykład jednostkami podległymi wydziałowi mogą oprócz instytutów być też dziekanat, czy administracja gmachu. Nie ma też wymogu aby jednostką nadrzędną danej jednostki organizacyjnej był jednostka typu, który jest typem bezpośrednio nadrzędnym do jej typu. Na przykład nie wszystkie zakłady muszą podlegać instytutom, niektóre z nim mogą podlegać bezpośrednio wydziałom. 
 
-Aplikacja powinna udostępniać zestaw typów jednostek oraz definiować jak który typ jest nadrzędny w stosunku do którego. Dane te powinny być zdefiniowane w momencie instalcji i nie powinno być możliwości ich zmiany z poziomu aplikacji. Program powinien umożliwiać dodawanie nowych jednostkek organizacyjnych(nadawanie im nazwy), definiowanie ich typów oraz umieszczanie ich w strukturze organizcji(poprzez nadwanie jednostek nadrzędnych). Powinien również umożliwiać ich edycję oraz usuwanie(pod warunkiem, że nie spowoduje to osierocenia innej jednostki organizacyjnej oraz w sytemie nie ma zdefiniowanych zadań wykonywanych dla tej jednostki(patrz \ref{zadania})). Aplikacja powinna pilnowąć struktury drzewa oraz zgodności typów jednostek. Powinna też umożliwić wyszukiwanie jednostki za pomocą jej nazwy, oraz wyświetlania wszystkich jednostek obecnych w systemie.
+Aplikacja powinna udostępniać zestaw typów jednostek oraz definiować który typ jest nadrzędny w stosunku do którego. Dane te powinny być zdefiniowane w momencie instalcji i nie powinno być możliwości ich zmiany z poziomu aplikacji. Program powinien umożliwiać dodawanie nowych jednostkek organizacyjnych(nadawanie im nazwy), definiowanie ich typów oraz umieszczanie ich w strukturze organizcji(poprzez nadwanie jednostek nadrzędnych). Powinien również umożliwiać ich edycję oraz usuwanie(pod warunkiem, że nie spowoduje to osierocenia innej jednostki organizacyjnej oraz w sytemie nie ma zdefiniowanych zadań wykonywanych dla tej jednostki(patrz \ref{zadania})). Aplikacja powinna pilnowąć struktury drzewa oraz zgodności typów jednostek. Powinna też umożliwić wyszukiwanie jednostki za pomocą jej nazwy, oraz wyświetlania wszystkich jednostek obecnych w systemie.
 
 Atrybutami jednostki oprócz wspominanych wcześniej nazwy, typu i miejsca w strukturze organizacji są jej adres oraz reprezentant, którego zadaniem jest podpisywanie umów w imieniu jednostki. Atrybutami reprezentanta są jego imię i nazwisko jednak ze wzgledu pisemną formę umowy należy przechowywać rónież formę iic biernika. Jeden reprezentant może być przypisany do kliku jednostek. Tak jak w przypadku urzędu skarbowego podczas wprwadzanią bądź edycji jednostki użytkownik powienien mieć możliwość wyboru reprezentanta z listy już wcześniej wprowadzonych lub dodania nowego.
 
@@ -28,19 +28,22 @@ W ramach jednostek orgaznizayjnych wykonywane są zadania. To na wykonywanie pos
 
 Podczas analizy ustalono, że powinna istnieć możliwość podziału zadań na mniejsze grupy w ramach jednostki organizacyjnej. Wprowadzono więc kolejny atrybut zadania jakim jest jego typ(definiowany w ramach jednostki). 
 
-Użytkownik powinien posiadać możliwość dodawania, edycji zarówno zadań jak i ich typów. Usuwanie typów zadań możliwe jest tylko wtedy gdy nie ma żadnego zadania danego typu. Analogicznie usunąć zadanie można tylko wtedy gdy w systemie nie ma żadnych powiązanym z nim umów. Dodatkowo system powinien umożliwiać wyszukiwanie zadań po nazwie oraz ich typie, oraz wyświetlanie wszytkich zadań powiązanych z daną jednostką organizacyjną oraz jednostkami jej podległymi. Analogicznie użytkownik powinien mieć możliwość wyszukiwania typów zadań po ich nazwach oraz możliwość wyświetlania wszystkich typów zadanań właściwych dla danej jednostki.
+Użytkownik powinien posiadać możliwość dodawania i edycji zarówno zadań jak i ich typów. Usuwanie typów zadań możliwe jest tylko wtedy gdy nie ma żadnego zadania danego typu. Analogicznie usunąć zadanie można tylko wtedy gdy w systemie nie ma żadnych powiązanym z nim umów. Dodatkowo system powinien umożliwiać wyszukiwanie zadań po nazwie oraz ich typie, oraz wyświetlanie wszytkich zadań powiązanych z daną jednostką organizacyjną oraz jednostkami jej podległymi. Analogicznie użytkownik powinien mieć możliwość wyszukiwania typów zadań po ich nazwach oraz możliwość wyświetlania wszystkich typów zadanań właściwych dla danej jednostki.
 
 \subsection[Umowy][Umowy]{Umowy}
-Najważniejszym obiektem występującym w systemie jest umowa. Podstawowymi atrybutami umowy są jej strony a więc jednostka organizacyjna oraz pracownik. Umowa zawiera też daty zawarcia, rozpoczęcia i zakończenia(przy czym system pilnuje aby data zawarcia była wcześniejsza lub taka sama jak data rozpoczęcia oraz aby data zakończenia późniejsza niż data rozpoczęca), zawiera również przedmiot umowy(nazwę dzieła lub zlecenia), wynagrodzenie jakie należy się za jego wykonanie oraz czy czy umowa wykonywana będzie w siedzibie zlecającego. Umowa posiada także umikalny w skali całego systemu numer nadawany przez aplikację.
+Najważniejszym obiektem występującym w systemie jest umowa. Podstawowymi atrybutami umowy są jej strony a więc jednostka organizacyjna oraz pracownik. Umowa zawiera też daty zawarcia, rozpoczęcia i zakończenia(przy czym system pilnuje aby data zawarcia była wcześniejsza lub taka sama jak data rozpoczęcia oraz aby data zakończenia późniejsza niż data rozpoczęca), zawiera również przedmiot umowy(nazwę dzieła lub zlecenia), wynagrodzenie jakie należy się za jego wykonanie oraz informację czy umowa będzie wykonywana w siedzibie zlecającego. 
 
 \subsubsection{Typ umowy}
-Użytkownik ma możliwość wyboru typu umowu. Typ umowy definiuje tytuł umowy(umowa zlecenia czy o dzieło) oraz koszt uzyskania przychodu. W projektowanej wersji aplikacji dostępne bedą standarodowe stawki kosztu uzuskania przychodu wynoszące 20\% i 50\%. Typ umowy posiada również nazwę. Jest ona w ogólnym przypadku różna od tytułu umowy, np. dla typu o nazwie \textit{Umowa o dzieło autorskie} tutułem umowy będzie \textit{Umowa o dzieło}. Na podstawie typu umowy, statusu, wieku oraz płci pracownika określane jest jakie składkki będą musiały być odprowadzone od umowy. W przypadku składek dobrowolnych użytkownik pytany jest czy pracownik jest zainteresowany ich odprowadzaniem. Typy umowy są zdefiniowane w systemie w momencie instalacji. Analogicznie do innych elementów tego typu nie ma możliwości ich edycji za pomocą aplikacji.
+Użytkownik ma możliwość wyboru typu umowu. Typ umowy definiuje tytuł umowy(umowa zlecenia czy o dzieło) oraz koszt uzyskania przychodu. W projektowanej wersji aplikacji dostępne bedą standarodowe stawki kosztu uzyskania przychodu wynoszące 20\% i 50\%. Typ umowy posiada również nazwę. Jest ona w ogólnym przypadku różna od tytułu umowy, np. dla typu o nazwie \textit{Umowa o dzieło autorskie} tutułem umowy będzie \textit{Umowa o dzieło}. Na podstawie typu oraz wynagrodzenia z tytyłu umowy, a także na podstawie statusu, wieku oraz płci pracownika określane bedzie jakie składkki będą musiały być odprowadzone od umowy. W przypadku składek dobrowolnych użytkownik pytany jest czy pracownik jest zainteresowany ich odprowadzaniem. Typy umowy są zdefiniowane w systemie w momencie instalacji. Analogicznie do innych elementów tego typu nie ma możliwości ich edycji za pomocą aplikacji.
 
 \subsubsection{Płatność}
 Użytkownik ma możliwość wyboru jednego ze zdefiniowanych sposobu płatności. Podstawowym sposobem płatności jest płatność jednorazowa po zakończeniu umowy. System umożliwia też wybór ratalnego sposobu płatności, gdzie okres między kolejnymi ratami może być zdefiniowany w dniach albo miesiącach. Użytkownik ma możliwość samodzielnego definiowana sposobów płatności podajać ich nazwę oraz liczbe dni lub miesięcy co jakie powinno być wypłacane wynagrodzenie. Ma też możliwość usuwania zdefiniowanych przez siebie wcześniej a nie używanych sposobów płatności. 
 
+\subsubsection{Numer umowy}
+Numery umów będa nadawane automatycznie przez aplikację. Sygnatura umowy piwinna być unikalna w skali całego systemu. Przyjęto założenie, że częścią składową numeru umowy będzie data jej zawarcia(w formie numerycznej). Numer umowy będzie umieszczany w jej nagłówku.
+
 \subsubsection{}
-Użytkownik ma możliwość dodawania nowych umów, ich edycji oraz usuwania. System umowżliwia ponadto wyświetlanie listy wszystkich umów dostępnych dla danego użytkownika oraz pozwala na ich wyszukiwanie na podstawie pracownika, jednostki, zadania oraz typu umowy.
+Użytkownik ma możliwość dodawania nowych umów, ich edycji oraz usuwania. System umowżliwia ponadto wyświetlanie listy wszystkich umów dostępnych dla danego użytkownika oraz pozwala na ich wyszukiwanie na podstawie pracownika, jednostki oraz zadania.
 
 \subsection[Rachunki][Rachunki]{Rachunki}
 Jako postawę do wypłaty wynargodzeniea przyjęto rachunki. Rachunki występują zawsze w kontekście danej umowy. Są one ponadto numerowane(nr rachunków są kolejnymi liczbami naturalnymi). Atrybutami rachunku są ponadto kwota oraz data wystawienia.
@@ -54,24 +57,35 @@ Użytkownik będzie miał możliwość wydruku zarówno umów jak i rachunków. 
 W aplikacji zostali wyróżnieni dwaj aktorzy:
 
 \subsubsection{Administrator jednostki}
-Powiązany z konkretną jednostką organizacyjną, ma możliwość wykonywania operacji na zadaniach, typach zadań oraz umowach w ramach swojej jednostki oraz wszystkich jednostek jej podlegających.
+Powiązany z konkretną jednostką organizacyjną, ma możliwość wykonywania operacji na zadaniach, typach zadań oraz umowach w ramach swojej jednostki oraz wszystkich jednostek jej podlegających. Może mieć możliwość wykonywania operacji na pracownikach.
 %TODO co z pracownikami
 
 \subsubsection{Administrator systemu}
-Ma możliwość wykonywania operacji na jednostkach organizacyjnych oraz zarządzania administratorami jednostek(ich dodawanie, usuwanie oraz przydzielanie uprawnień). Ma uprawnienia administratora jednostki dla wszystkich jednostek organizacyjnych.
+Ma możliwość wykonywania operacji na jednostkach organizacyjnych oraz zarządzania administratorami jednostek(ich dodawanie, usuwanie oraz przydzielanie uprawnień). Może definiować nowe sposoby płatności. Ma uprawnienia administratora jednostki dla wszystkich jednostek organizacyjnych obecnych w systemie.
 
 \section[Przypadki użycia][Przypadki użycia]{Przypadki użycia}
 Jednym z etapów modelowania aplikacji jest określenie przypadków użycia(ang. \textit{Use Case}). Przypadkami użyciamy nazywamy funkconalności systemu z punktu widzenia użytkownika. Przypadki użycia mogą się w sobie zawierać oraz się rozszerzać. Z punktu widzenia przejrzystości dokumentacji dobrą praktyką jest numerowanie przypadków użycia.
 
 \subsection[Diagram przypadków użycia][Diagram przypadków użycia]{Diagram przypadków użycia}
-Diagram przypadków użycia jest graficzną formą ich prezentacji. Zawiera on jedynie aktorów oraz funkcjonalności modelowane systemu. Nie dostarcza informacji o sposobie realizacji tych funkcjonalności. Na rysunkach ... zamieszczono TODO.
+Diagram przypadków użycia jest graficzną formą ich prezentacji. Zawiera on jedynie aktorów oraz funkcjonalności modelowane systemu. Nie dostarcza informacji o sposobie realizacji tych funkcjonalności. Przykładowy diagram przypadków urzycia zamieszczono na rysunku \ref{diagram-uc}.
+
+
+\begin{figure}[tdh]
+    \begin{center}
+	\includegraphics[scale=.6]{img/diagram-uc.png}
+	\caption{Diagram przypadków dla zarządzania listą pracowników}
+	\label{diagram-uc}
+    \end{center}
+\end{figure}
+
 
 \subsection[Scenariusze przypadków użycia][Scenariusze przypadków użycia]{Scenariusze przypadków użycia}
-Wiecej informacji o poszczególnych funkcjonalnościach system dostarczają scenariusze przypadków użycia. Opisują one w sposó słowny aktorów biorących w danych przypadku oraz warunki wstępne oraz końcowe. Opisują też szcegółowo interakcję pomiędzy użytkownikiem a systemem. Wyróżnić można dwie formy takiego opisu: opis w postaci ciągłego tekstu oraz listę kroków. Poniżej przykład scenariusz dla przypradku dodawania pracownika:
+Wiecej informacji o poszczególnych funkcjonalnościach system dostarczają scenariusze przypadków użycia. Opisują one w sposób słowny aktorów biorących udział w danych przypadku oraz warunki wstępne oraz końcowe. Opisują też szcegółowo interakcję pomiędzy użytkownikiem a systemem. Wyróżnić można dwie formy takiego opisu: opis w postaci ciągłego tekstu oraz listę kroków. Poniżej przykładowy scenariusz dla przypadku dodawania pracownika:
 
 \subsubsection{UC-101 Dodawanie pracownika}
 \begin{tabular}{ll}
 	\textbf{Aktorzy:} & Administrator jednostki \\
+	
 	\textbf{Warunek początkowy:} & Użytkownik zalogowany w systemie \\
 	\textbf{Warunek końcowy:} & Nowy pracownik zapisany w systemie \\
 	\multicolumn{2}{l}{\textbf{Scenariusz głowny:}}\\
@@ -80,7 +94,7 @@ Wiecej informacji o poszczególnych funkcjonalnościach system dostarczają scen
 		\item Użytkownik wybiera opcję "Dodaj nowego pracownika".
 		\item System wyświetla formularz dadawania użytkownika.
 		\item Użytkownik wypełnia formularz.
-		\item Użytkownik potwierdza przesłanie formularza przyciskiem "Wprowadź". sdfiusdhfpuiashfpuiadshfiuashfiuhfiusdahfiupsa
+		\item Użytkownik potwierdza przesłanie formularza przyciskiem "Wprowadź".
 		\item System sprawdza poprawność wprowadzonych danych.
 		\item System zapisuje dane nowego pracownika
 	\end{enumerate}\end{minipage}
@@ -88,5 +102,12 @@ Wiecej informacji o poszczególnych funkcjonalnościach system dostarczają scen
 \end{tabular}
 	
 \section[Prototypowanie][Prototypowanie]{Prototypowanie}
-TODO opis + przykładowa makieta
+Ostanim etapem fazy analizy jest stworzenie makiet realizonago systemu. Makiety nie odzwierciedlają faktycznego wyglądu aplikacji, zawierają jednak wszystkie jej elementy w postaci uproszczonych kontrolek. Pozwalają na szersze spojrzenie na całość projektowanego systemu co niekiedy może prowadzić do wychwycenia błędów w jej modelu logicznym. Makiety są wreszcie cenną pomocą dla programistów mających mniejsze doświadczenie w pracy nad cześcią kliencką aplikacji. Na rysunku \ref{makieta} przedstawiono przykład makiety formularza do wprowadzania danych pracowników. Została ona wygenerowana za pomocą programu Pencil.
 
+\begin{figure}[tdh]
+    \begin{center}
+	\includegraphics[scale=.8 ]{img/makieta.png}
+	\caption{Makieta formularza do wprowadzania danych pracowników}
+	\label{makieta}
+    \end{center}
+\end{figure}
