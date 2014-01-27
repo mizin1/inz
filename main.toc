@@ -1,0 +1,104 @@
+\select@language {polish}
+\contentsline {chapter}{\numberline {1\relax .\kern .5em }Wprowadzenie}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1\relax .\kern .5em }Motywacja}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2\relax .\kern .5em }Tytu\IeC {\l } w spisie tre\IeC {\'s}ci}{1}{section.1.2}
+\contentsline {chapter}{\numberline {2\relax .\kern .5em }Umowy cywilno-prawne}{2}{chapter.2}
+\contentsline {section}{\numberline {2.1\relax .\kern .5em }Umowa cywilno-prawna}{2}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1\relax .\kern .5em }Umowa zlecenia}{2}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2\relax .\kern .5em }Umowa o dzie\IeC {\l }o}{3}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2\relax .\kern .5em }Strony umowy}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3\relax .\kern .5em }Forma umowy}{3}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1\relax .\kern .5em }Elementy obowi\IeC {\k a}zkowe na umowie}{4}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4\relax .\kern .5em }Wypowiedzenie umowy}{4}{section.2.4}
+\contentsline {section}{\numberline {2.5\relax .\kern .5em }Powierzenie wykonywania umowy osobie trzeciej}{4}{section.2.5}
+\contentsline {section}{\numberline {2.6\relax .\kern .5em }Wynagrodzenie}{4}{section.2.6}
+\contentsline {section}{\numberline {2.7\relax .\kern .5em }Rachunek do umowy}{5}{section.2.7}
+\contentsline {section}{\numberline {2.8\relax .\kern .5em }Protok\IeC {\'o}\IeC {\l } odbioru dzie\IeC {\l }a lub zlecenia}{5}{section.2.8}
+\contentsline {section}{\numberline {2.9\relax .\kern .5em }Opodatkowanie}{5}{section.2.9}
+\contentsline {subsection}{\numberline {2.9.1\relax .\kern .5em }Koszty uzyskania przychodu}{6}{subsection.2.9.1}
+\contentsline {subsection}{\numberline {2.9.2\relax .\kern .5em }Ograniczenia w stosowaniu podwy\IeC {\.z}szonych koszt\IeC {\'o}w uzyskania przychodu}{6}{subsection.2.9.2}
+\contentsline {section}{\numberline {2.10\relax .\kern .5em }Prawa autorskie}{6}{section.2.10}
+\contentsline {section}{\numberline {2.11\relax .\kern .5em }Ubezpieczenia spo\IeC {\l }eczne i ubezpieczenie zdrowotne}{7}{section.2.11}
+\contentsline {subsection}{\numberline {2.11.1\relax .\kern .5em }Ubezpieczenie emerytalne i ubezpieczenie rentowe}{7}{subsection.2.11.1}
+\contentsline {subsection}{\numberline {2.11.2\relax .\kern .5em }Ubezpieczenie chorobowe}{8}{subsection.2.11.2}
+\contentsline {subsection}{\numberline {2.11.3\relax .\kern .5em }Ubezpieczenie wypadkowe}{8}{subsection.2.11.3}
+\contentsline {subsection}{\numberline {2.11.4\relax .\kern .5em }Ubezpieczenie zdrowotne}{8}{subsection.2.11.4}
+\contentsline {section}{\numberline {2.12\relax .\kern .5em }Przyk\IeC {\l }ady os\IeC {\'o}b zatrudnionych na umowach cywilno-prawnych}{8}{section.2.12}
+\contentsline {subsection}{\numberline {2.12.1\relax .\kern .5em }Pracownik zatrudniony na umow\IeC {\k e} o prac\IeC {\k e}}{8}{subsection.2.12.1}
+\contentsline {subsection}{\numberline {2.12.2\relax .\kern .5em }Ucze\IeC {\'n} lub student do 26 roku \IeC {\.z}ycia}{9}{subsection.2.12.2}
+\contentsline {subsection}{\numberline {2.12.3\relax .\kern .5em }Osoba niemaj\IeC {\k a}ca innego tytu\IeC {\l }u ubezpieczenia ni\IeC {\.z} umowa cywilno-prawna}{10}{subsection.2.12.3}
+\contentsline {subsection}{\numberline {2.12.4\relax .\kern .5em }Emeryt lub rencista}{10}{subsection.2.12.4}
+\contentsline {subsection}{\numberline {2.12.5\relax .\kern .5em }Osoba pobieraj\IeC {\k a}ca zasi\IeC {\l }ek macierzy\IeC {\'n}ski}{11}{subsection.2.12.5}
+\contentsline {subsection}{\numberline {2.12.6\relax .\kern .5em }Osoba przybywaj\IeC {\k a}ca na urlopie wychowawczym}{11}{subsection.2.12.6}
+\contentsline {subsection}{\numberline {2.12.7\relax .\kern .5em }Osoba prowadz\IeC {\k a}ca dzia\IeC {\l }alno\IeC {\'s}\IeC {\'c} gospodarcz\IeC {\k a}}{11}{subsection.2.12.7}
+\contentsline {section}{\numberline {2.13\relax .\kern .5em }Sk\IeC {\l }adki na Fundusz Gwarantowanych \IeC {\'S}wiadcze\IeC {\'n} Pracowniczych i Fundusz Pracy}{11}{section.2.13}
+\contentsline {section}{\numberline {2.14\relax .\kern .5em }Umowy cywilno-prawne a prawo pracy}{12}{section.2.14}
+\contentsline {section}{\numberline {2.15\relax .\kern .5em }Systemy wspomagaj\IeC {\k a}ce obs\IeC {\l }ug\IeC {\k e} um\IeC {\'o}w cywilno-prawnych}{12}{section.2.15}
+\contentsline {subsection}{\numberline {2.15.1\relax .\kern .5em }Kalkulatory wynagrodze\IeC {\'n}}{12}{subsection.2.15.1}
+\contentsline {subsection}{\numberline {2.15.2\relax .\kern .5em }SystemUm\IeC {\'o}w.pl}{12}{subsection.2.15.2}
+\contentsline {subsection}{\numberline {2.15.3\relax .\kern .5em }Asystent Rejestr Um\IeC {\'o}w}{14}{subsection.2.15.3}
+\contentsline {chapter}{\numberline {3\relax .\kern .5em }Model funkcjonalny}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1\relax .\kern .5em }Profil odbiorcy systemu}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2\relax .\kern .5em }Opis funkcjonalno\IeC {\'s}ci}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1\relax .\kern .5em }Pracownicy}{16}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2\relax .\kern .5em }Struktura organizacyjna}{17}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3\relax .\kern .5em }Zadania}{18}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4\relax .\kern .5em }Umowy}{19}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5\relax .\kern .5em }Rachunki}{20}{subsection.3.2.5}
+\contentsline {subsection}{\numberline {3.2.6\relax .\kern .5em }Wydruki}{21}{subsection.3.2.6}
+\contentsline {section}{\numberline {3.3\relax .\kern .5em }Aktorzy}{21}{section.3.3}
+\contentsline {section}{\numberline {3.4\relax .\kern .5em }Przypadki u\IeC {\.z}ycia}{21}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1\relax .\kern .5em }Diagram przypadk\IeC {\'o}w u\IeC {\.z}ycia}{22}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2\relax .\kern .5em }Scenariusze przypadk\IeC {\'o}w u\IeC {\.z}ycia}{22}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5\relax .\kern .5em }Prototypowanie}{23}{section.3.5}
+\contentsline {chapter}{\numberline {4\relax .\kern .5em }Technologie wykorzystane w aplikacji}{25}{chapter.4}
+\contentsline {section}{\numberline {4.1\relax .\kern .5em }Aplikacja w architekturze wielowarstwowej}{25}{section.4.1}
+\contentsline {section}{\numberline {4.2\relax .\kern .5em }Warstwa prezentacji}{26}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1\relax .\kern .5em }HTML}{26}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2\relax .\kern .5em }CSS}{27}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3\relax .\kern .5em }JavaScript}{27}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4\relax .\kern .5em }AJAX}{27}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5\relax .\kern .5em }Dojo Toolkit}{28}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3\relax .\kern .5em }Warstwa aplikacji}{28}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1\relax .\kern .5em }J\IeC {\k e}zyk programowania}{29}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2\relax .\kern .5em }Serwlety}{29}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3\relax .\kern .5em }ObjectLedge}{30}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4\relax .\kern .5em }Apache Velocity}{32}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5\relax .\kern .5em }Spring Framework}{33}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6\relax .\kern .5em }JDBC}{33}{subsection.4.3.6}
+\contentsline {subsection}{\numberline {4.3.7\relax .\kern .5em }Hibernate}{34}{subsection.4.3.7}
+\contentsline {section}{\numberline {4.4\relax .\kern .5em }Warstwa \IeC {\'z}r\IeC {\'o}d\IeC {\l }a danych}{35}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1\relax .\kern .5em }Oracle Database 11g Express Edition}{35}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2\relax .\kern .5em }MySQL}{35}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3\relax .\kern .5em }PostgreSQL}{35}{subsection.4.4.3}
+\contentsline {section}{\numberline {4.5\relax .\kern .5em }Narz\IeC {\k e}dzia wspomagaj\IeC {\k a}ce tworzenie aplikacji}{36}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1\relax .\kern .5em }Eclipse}{36}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2\relax .\kern .5em }Maven}{37}{subsection.4.5.2}
+\contentsline {chapter}{\numberline {5\relax .\kern .5em }Model danych}{38}{chapter.5}
+\contentsline {section}{\numberline {5.1\relax .\kern .5em }Model logiczny}{38}{section.5.1}
+\contentsline {section}{\numberline {5.2\relax .\kern .5em }Model fizyczny}{45}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1\relax .\kern .5em }Model fizyczny a diagram ER}{45}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2\relax .\kern .5em }Wyb\IeC {\'o}r kluczy g\IeC {\l }\IeC {\'o}wnych}{45}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3\relax .\kern .5em }Zwi\IeC {\k a}zki wiele do wielu}{46}{subsection.5.2.3}
+\contentsline {chapter}{\numberline {6\relax .\kern .5em }Implementacja}{49}{chapter.6}
+\contentsline {section}{\numberline {6.1\relax .\kern .5em }Baza danych}{49}{section.6.1}
+\contentsline {section}{\numberline {6.2\relax .\kern .5em }Dost\IeC {\k e}p do danych}{49}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1\relax .\kern .5em }Hibernate}{49}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2\relax .\kern .5em }Obiekty DAO}{51}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3\relax .\kern .5em }Obiekty POJO}{53}{subsection.6.2.3}
+\contentsline {section}{\numberline {6.3\relax .\kern .5em }Komunikacja u\IeC {\.z}ytkownika z systemem}{54}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1\relax .\kern .5em }Walidacja formularzy}{54}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2\relax .\kern .5em }Technologia AJAX}{55}{subsection.6.3.2}
+\contentsline {section}{\numberline {6.4\relax .\kern .5em }Tworzenie widoku}{56}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1\relax .\kern .5em }Nawigacja}{56}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2\relax .\kern .5em }Dynamiczne elementy widoku}{57}{subsection.6.4.2}
+\contentsline {subsection}{\numberline {6.4.3\relax .\kern .5em }Wygl\IeC {\k a}d aplikacji}{57}{subsection.6.4.3}
+\contentsline {subsection}{\numberline {6.4.4\relax .\kern .5em }Wykorzystanie Velocity}{57}{subsection.6.4.4}
+\contentsline {section}{\numberline {6.5\relax .\kern .5em }Generacja plik\IeC {\'o}w pdf}{58}{section.6.5}
+\contentsline {section}{\numberline {6.6\relax .\kern .5em }Automatyczna generacja rachunk\IeC {\'o}w}{58}{section.6.6}
+\contentsline {section}{\numberline {6.7\relax .\kern .5em }Mechanizm bezpiecze\IeC {\'n}stwa}{58}{section.6.7}
+\contentsline {section}{\numberline {6.8\relax .\kern .5em }Testowanie aplikacji}{59}{section.6.8}
+\contentsline {subsection}{\numberline {6.8.1\relax .\kern .5em }Za\IeC {\'s}lepki}{60}{subsection.6.8.1}
+\contentsline {chapter}{\numberline {7\relax .\kern .5em }Podsumowanie}{61}{chapter.7}
+\contentsline {chapter}{\numberline {A\relax .\kern .5em }Wygl\IeC {\k a}d aplikacji}{62}{appendix.A}
+\contentsline {chapter}{Bibliografia}{68}{figure.A.5}

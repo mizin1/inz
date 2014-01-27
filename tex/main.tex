@@ -2,23 +2,20 @@
 \pdfcompresslevel=9
 \pdfinfo
 {
-    /Author (Autor)
-    /Title (Tytul)
+    /Author (Jakub Świątkowski)
+    /Title (Aplikacja trójwarstwowa do wspierania pracy przychodni lekarskiej)
     /Subject (Tematyka)
     /Keywords (Slowa kluczowe)
 }
 %\documentclass[a4paper,polish,onecolumn,oneside,floatssmall,11pt,titleauthor,wide,openright]{mwrep}
 %\usepackage[scale={0.7,0.8},paper=a4paper,twoside]{geometry}
 \documentclass[a4paper,onecolumn,oneside,11pt,wide,floatssmall]{mwrep}
-% \usepackage{polish}
+%\usepackage{polish}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{bookman}
-
-%km na potrzeby komentarzy
-\usepackage{verbatim}
 
 \usepackage{geometry}
 \usepackage[utf8x]{inputenc}
@@ -29,7 +26,7 @@
 \def\url#1{{ \tt #1}}
 
 \usepackage{listings}
-
+\usepackage{enumitem}
 % marginesy
 \textwidth\paperwidth
 \advance\textwidth -55mm
@@ -92,6 +89,17 @@
 \newtheorem{case}{Przypadek}
 
 \definecolor{ListingBackground}{rgb}{0.95,0.95,0.95}
+\linespread{1.5}
+\setitemize[0]{itemindent=26pt,leftmargin=0pt,topsep=0pt}
+\vspace{-5mm}
+%Dodanie możliwości zakresu numerownia w jednym punkcie enumerate
+\def\itemrange#1{%
+\addtocounter{enumi}{1}%
+\edef\labelenumi{\theenumi--\noexpand\theenumi.}%
+\addtocounter{enumi}{-1}%
+\addtocounter{enumi}{#1}%
+\item
+\def\labelenumi{\theenumi.}}
 
 \begin{document}
 
@@ -155,13 +163,15 @@ frame=tb,
 framerule=0.1pt,
 }
 
+
+
 \renewcommand*\lstlistingname{Wydruk}
 \renewcommand*\lstlistlistingname{Spis wydruków}
 
 \pagenumbering{roman}
 \renewcommand{\baselinestretch}{1.0}
 \raggedbottom
-\input {tex/title}
+%\input {tex/title}
 
 \tableofcontents
 % \addcontentsline{toc}{chapter}{{Przedmowa1}{vii}}{vii}
@@ -176,14 +186,17 @@ framerule=0.1pt,
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-
 \input {tex/1_Wprowadzenie}
 \input {tex/2_Umowy_cywilno_prawne}
 \input {tex/3_Model_funkcjonalny}
 \input {tex/4_Technologie_wykorzystane_w_aplikacji}
 \input {tex/5_Model_danych}
 \input {tex/6_Implementacja}
+\input {tex/7_Podsumowanie}
+
 \appendix
+
+\input {tex/Wyglad_aplikacji}
 
 % tutaj załączniki
 
@@ -200,9 +213,15 @@ framerule=0.1pt,
 % \bibliographyweb{BIB/books}
 
 % \bibliography{bib/verificard,bib/jml,bib/daikon}
-\bibliography{bib/daikon,bib/statistics,bib/other}
+% \bibliography{bib/daikon,bib/statistics,bib/other}
+\bibliography{bib/ustawy}
 
 \end{document}
 
 % ex: set tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab fileformat=unix filetype=tex spelllang=pl,en spell:
+
+
+
+
+
 
