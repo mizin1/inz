@@ -2,270 +2,174 @@
 \label{chap6}
 
 \section{Baza danych}
-Warstwa źródła danych została oparta na systemie PostgreSQL. Schemat danych powstał na podstawie modelu fizycznego opisanego w \ref{modelFizyczny}. Oprócz definicji tabel zawiera on również sekwencje służące do generowania sztucznych kluczy głównych. Dla kolumn zawierających wartości wyliczeniowe (takich jak płeć mogąca przyjmować jedną z 2 wartości) zdefiniowano więzy kontrolne za pomocą klauzul check.
+Warstwa obiektów trwałych została oparta na systemie PostgreSQL. Schemat danych powstał na podstawie modelu opisanego w rozdziale \ref{modelFizyczny}. Oprócz definicji tabel zawiera on również sekwencje służące do generowania sztucznych kluczy głównych. Dla kolumn zawierających wartości wyliczeniowe (takich jak płeć mogąca przyjmować jedną z 2 wartości) zdefiniowano więzy kontrolne za pomocą klauzul check.
 
 \section{Dostęp do danych}
 Dostęp do danych został zrealizowany przy użyciu narzędzia Hibernate z wykorzystaniem wzorca DAO oraz obiektów POJO.
 
 \subsection[Hibernate][Hibernate]{Hibernate} 
-Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. Mapowanie obiektowo-relacyjne wykonano przy pomocy plików hbm.xml. Na wydrukach \ref{praconiwkHbm} oraz \ref{typZadaniaHbm} przestawiono przykłady takich plików.
+Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. Mapowanie obiektowo-relacyjne wykonano przy pomocy plików hbm.xml. Na wydruku \ref{adresHbm} przedstawiono fragment pliku zawierającego mapowanie tabeli Adres pracownika.
 
-
-
-\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption=Przykład pliku mapującego Hibernate,label={praconiwkHbm}]
+\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false, caption=Mapowanie tabeli Adres pracownika w postaci pliku hbm.xml,label={adresHbm}]
 <?xml version="1.0"?>
 <hibernate-mapping>
-	<class name="pl.waw.mizinski.umowy.model.Pracownik" table="pracownik"
-		lazy="true">
-		<id name="id" type="java.lang.Long">
-			<column name="id" sql-type="int4" />
-			<generator class="sequence">
-				<param name="sequence">pracownik_sequence</param>
-			</generator>
-		</id>
-		<property name="nazwisko" type="java.lang.String">
-			<column name="nazwisko" sql-type="varchar" />
-		</property>
-		
-		<!-- .. -->
-		
-		<property name="plec" column="plec">
-			<type name="org.hibernate.type.EnumType">
-				<param name="enumClass">pl.waw.mizinski.umowy.model.enums.Plec</param>
-				<param name="type">12</param>
-			</type>
-		</property>
-		
-		<!-- .. -->
-		
-		<many-to-one name="urzadSkarbowy"
-			class="pl.waw.mizinski.umowy.model.UrzadSkarbowy">
-			<column name="urzad_skarbowy" />
-		</many-to-one>
-		
-		<!-- .. -->
-		
-		<set name="adresy" table="adres" cascade="all" inverse="true" >
-         	<key>
-                <column name="pracownik" />
-            </key>
-            <one-to-many class="pl.waw.mizinski.umowy.model.AdresPracownika" />
-        </set>
-	</class>
-</hibernate-mapping>
-\end{lstlisting}
-
-\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption=Przykład pliku mapującego Hibernate wykorzystującego klucz złożony,label={typZadaniaHbm}]
-<?xml version="1.0"?>
-<hibernate-mapping>
-	<class name="pl.waw.mizinski.umowy.model.TypZadania" table="typ_zadania"
-		lazy="true">
-		<composite-id name="typZadaniaPK" 
-			class="pl.waw.mizinski.umowy.model.TypZadaniaPK">
-			<key-property name="nazwa" type="java.lang.String">
-				<column name="nazwa" />
-			</key-property>
-				<key-many-to-one name="jednostkaOrganizacyjna" 
-					class="pl.waw.mizinski.umowy.model.JednostkaOrganizacyjna">
-				<column name="jednostka_organizacyjna" />
+	<class name="pl.waw.mizinski.umowy.model.AdresPracownika"
+			table="adres_pracownika" lazy="true">
+		<composite-id name="adresPracownikaPK" 
+				class="pl.waw.mizinski.umowy.model.AdresPracownikaPK">
+			<key-many-to-one name="pracownik" 
+					class="pl.waw.mizinski.umowy.model.Pracownik">
+				<column name="pracownik" sql-type="int4"/>
 			</key-many-to-one>
+			<key-property name="typAdresu" column="typ_adresu">
+				<type name="org.hibernate.type.EnumType">
+					<param name="enumClass">
+						pl.waw.mizinski.umowy.model.enums.TypAdresu
+				</param>
+					<param name="type">12</param>
+				</type>
+			</key-property>
 		</composite-id>
+		<property name="miejscowosc" type="java.lang.String">
+			<column name="miejscowosc" sql-type="varchar" />
+		</property>
 		
-		<!-- .. -->
-	
+		<!-- ... -->
+		
+		<many-to-one name="panstwo" class="pl.waw.mizinski.umowy.model.Panstwo">
+			<column name="panstwo" />
+		</many-to-one>
 	</class>
 </hibernate-mapping>
 \end{lstlisting}
 
-Na powyższych wydrukach pokazano najczęściej spotykane parametry plików mapujących, są nimi
-\begin{itemize}
-	\item element opisujący klucz główny. Wydruk \ref{praconiwkHbm} zawiera przykład klucza prostego (generowanego za pomocą sekwencji), zaś wydruk \ref{typZadaniaHbm} przykład klucza złożonego,
-	\item element mapujący kolumnę tabeli na właściwość klasy na przykładzie kolumny nazwisko,
-	\item element mapujący kolumnę tabeli na obiekt typu wyliczeniowego (kolumna plec),
-	\item element mapujący relację wiele do jednego na inny obiekt domenowy na podstawie klucza obcego (kolumna urzad\_skarbowy),
-	\item element mapujący relację jeden do wielu na kolekcję języka Java (zbiór adresów pracownika).
-\end{itemize}
+Tabela ta pozwala na posiadanie przez pracownika trzech adresów (zameldowania, zamieszkania i korespondencyjnego). Odzwierciedla to jej klucz główny. Składa się on z klucza obcego, odwzorowanego na klasę Pracownik oraz kolumny typ adresu odwzorowanej na typ wyliczeniowy. 
 
 
 \subsection[Obiekty DAO][Obiekty DAO]{Obiekty DAO}
-DAO (ang. \textit{Data Access Object} - Obiekt dostępu do danych) jest to wzorzec projektowy polegający na dostarczeniu interfejsu pozwalającego na dostęp oraz manipulację danymi. Obiekty takie tworzą osobną warstwę oddzielającą warstwę logiki biznesowej od warstwy źródła danych. Wykorzystywane w systemie obiekty DAO dziedziczą z abstrakcyjnej klasy bazowej, definiującej podstawowe operacje jakie można wykonać na obiektach trwałych. Została ona zaprezentowana na wydruku \ref{abstractDao}.
+%DAO (ang. \textit{Data Access Object} - Obiekt dostępu do danych) jest to wzorzec projektowy polegający na dostarczeniu interfejsu pozwalającego na dostęp oraz manipulację danymi. Obiekty takie tworzą osobną warstwę oddzielającą warstwę logiki biznesowej od warstwy źródła danych. 
+W aplikacji skorzystano z wzorca DAO. Wykorzystywane w systemie obiekty DAO dziedziczą z abstrakcyjnej klasy bazowej, definiującej podstawowe operacje jakie można wykonać na obiektach trwałych. Została ona zaprezentowana na wydruku \ref{abstractDao}.
 
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Abstrakcyjna klasa DAO,label={abstractDao}]
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Bazowa klasa DAO,label={abstractDao}]
 public abstract class AbstractDao<K extends Serializable, E> {
 
 	protected final Context context;
 	private final Class<E> entityClass;
 
-	public AbstractDao (Context context) {
+	public AbstractDao(Context context) {
 		this.context = context;
-		ParameterizedType genericSuperclass =  (ParameterizedType) getClass ()
-				.getGenericSuperclass ();
+		ParameterizedType genericSuperclass = (ParameterizedType) getClass()
+				.getGenericSuperclass();
 		this.entityClass = 
-				 (Class<E>) genericSuperclass.getActualTypeArguments ()[1];
+				 (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 	}
 
-	protected Session session () {
-		return HibernateSessionContext.getHibernateSessionContext (context)
-				.getSession ();
+	protected Session session() {
+		return HibernateSessionContext.getHibernateSessionContext(context)
+				.getSession();
 	}
 
-	public Class<E> getEntityClass () {
+	public Class<E> getEntityClass() {
 		return entityClass;
 	}
 
-	public E getById (K id) {
-		return  (E) session ().get (getEntityClass (), id);
+	public E getById(K id) {
+		return (E) session().get(getEntityClass(), id);
 	}
 
-	public List<E> getAll () {
-		Query query = session ().createQuery ("from " + getEntityClass ().getName ());
-		return HibernateUtils.queryResult (session (), query);
+	public void add(E entity) {
+		session().persist(entity);
 	}
 
-	public void add (E entity) {
-		session ().persist (entity);
+	public K save(E entity) {
+		return (K) session().save(entity);
 	}
 
-	public K save (E entity) {
-		return  (K) session ().save (entity);
+	public void remove(E entity) {
+		session().delete(entity);
 	}
 
-	public void saveOrUpdate (E entity) {
-		session ().saveOrUpdate (entity);
-	}
-
-	public E merge (E entity) {
-		return  (E) session ().merge (entity);
-	}
-
-	public void remove (E entity) {
-		session ().delete (entity);
-	}
-
-	public void remove (K id) {
-		E entity = getById (id);
-		remove (entity);
-	}
-
-	public void remove (Collection<E> entities) {
-		for  (E entity : entities) {
-			remove (entity);
-		}
-	}
-
-}
-\end{lstlisting}
-
-Przedstawiona klasa jest klasą generyczną. Parametryzowana jest dwoma typami danych: typem obiektu mapowanego na tabelę oraz typem jego klucza. Wydruk \ref{umowaDao} przedstawia przykład klasy dziedziczącej po klasie AbastractDao parametryzowanej typami Umowa oraz String (typ klucza głównego - numeru umowy).
-\chapter{Implementacja}
-\label{chap6}
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Klasa dao służąca do operacji na umowach,label={umowaDao}]
-public class UmowaDao extends AbstractDao<String, Umowa> {
-
-	public UmowaDao (Context context) {
-		super (context);
-	}
-	
-	public List<Umowa> getUmowyByPracownik (Pracownik pracownik){
-		Query query = session ().createQuery ("from Umowa u where u.pracownik=?");
-		query.setParameter (0, pracownik);
-		return HibernateUtils.queryResult (session (), query);
-	}
-	
 	...
+
 }
 \end{lstlisting}
 
-Warto zwrócić uwagę na samo zapytanie do bazy danych. Jest ono zapisane w języku HQL. Jak widać operuje ono jedynie na obiektach, nie zaś na tabelach ani ich kolumnach. Zaletą tego rozwiązania jest to, że niewielkie zmiany w bazie danych (np. zmiana nazwy tabeli bądź kolumny) nie muszą oznaczać konieczności zmian zapytań HQL.
+Przedstawiona klasa jest klasą generyczną. Parametryzowana jest dwoma typami danych: typem obiektu mapowanego na tabelę oraz typem jego klucza. 
 
 \subsection[Obiekty POJO][Obiekty POJO]{Obiekty POJO}
-W zaprezentowanych powyżej przykładach obiekty DAO zwracały zawsze obiekty trwałe. Takie rozwiązanie ma niestety jedną wadę. Podczas korzystania z takich obiektów Hibernate wykonuje wiele odwołań do bazy danych (w celu synchronizacji czy pobrania dodatkowych danych). Powoduje to często niepotrzebny narzut wydajnościowy. Rozwiązaniem tego problemu są obiekty POJO (ang. \textit{Plain Old Java Object}). Obiekty takie posiadają jedynie konstruktor ustawiający jego pola oraz metody pozwalające na ich odczyt (tzw. gettery). Co najważniejsze POJO w przeciwieństwie do obiektów trwałych nie są powiązane z sesją Hibernate. Wydruk \ref{pojo} zawiera przykład utworzenia obiektu POJO na podstawie elementów z bazy danych.
+Oprócz metod dziedziczonych z klasy bazowej, obiekty DAO posiadają też metody służące do odczytu danych w postaci obiektów POJO (ang. \textit{Plain Old Java Object}).
+Obiekty takie posiadają jedynie konstruktor oraz metody odczytujące wartości ich pól. Najczęstszym zastosowaniem obiektów POJO w aplikacji jest przekazywanie ich do mechanizmu Velocity w celu przygotowania widoku.
 
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Metoda DAO zwracająca listę obiektów POJO,label={pojo}]
-public class PracownikDao extends AbstractDao<Long, Pracownik> {
+\begin{comment}
+Metody bazowej klasy DAO zwracają obiekty trwałe. Powoduje to często niepotrzebny narzut wydajnościowy. Rozwiązaniem tego problemu jest wykorzystanie, niepowiązanych z sesją Hibernate, obiektów POJO (ang. \textit{Plain Old Java Object}). Wydruk \ref{pojo} zawiera metodę DAO zwracającą listę obiektów POJO opisujących umowę. Metoda ta dokonuje złączenia tabel już na etapie zapytania HQL.
 
-	private final static String PRACOWNIK_IMIE_NAZWISKO_POJO = 
-			"pl.waw.mizinski.umowy.pojo"
-			+ ".PracownikImieNazwiskoPOJO (p.id, p.pierwszeImie, p.nazwisko)";
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Metoda DAO zwracająca listę obiektów POJO opisujących umowę,label={pojo}]
+public class UmowaDao extends AbstractDao<String, Umowa> {
+
+	public static final String SIMPLE_UMOWA_POJO = 
+		"pl.waw.mizinski.umowy.pojo.SimpleUmowaPOJO("
+		+ "u.nrUmowy, u.typUmowy.nazwa, p.nazwisko, p.pierwszeImie, " +
+		"p.imionaPozostale, z.typZadania.typZadaniaPK.jednostkaOrganizacyjna.nazwa,"
+		+ "z.nazwa, u.wynagrodzenie, count(r.rachunekPK.nrRachunku))";
 
 	...
 
-	public List<PracownikImieNazwiskoPOJO> getAllPracownikImieNazwiskoPOJOs () {
-		Query query = session ().createQuery (
-				"select new " + PRACOWNIK_IMIE_NAZWISKO_POJO
-						+ "from Pracownik p");
-		return HibernateUtils.queryResult (session (), query);
+	public List<SimpleUmowaPOJO> getAllSimpleUmowaPOJOs() {
+		Query query = session().createQuery("select new " + SIMPLE_UMOWA_POJO +
+			"from Rachunek r right join r.rachunekPK.umowa u left join u.pracownik p"
+			+ " left join u.zadanie z group by u.nrUmowy, p.id, z.id");
+		return HibernateUtils.queryResult(session(), query);
 	}
 	
 	...
-}(
+}
 \end{lstlisting}
 
+%TODO jakis opis ja to POJO jest pobierane
 Jak łatwo zauważyć obiekty POJO nadają się jedynie od odczytu danych. Zapis oraz modyfikacja odbywają się już przy użyciu obiektów trwałych. Najczęstszym zastosowaniem obiektów POJO w aplikacji jest przekazywanie ich do mechanizmu Velocity w celu przygotowania widoku.
+
+\end{comment}
 
 \section[Komunikacja użytkownika z systemem][Komunikacja użytkownika z systemem]{Komunikacja użytkownika z systemem}
 Użytkownik komunikuje się z systemem na dwa sposoby. Pierwszym z nich są synchroniczne zapytania HTTP. Wykorzystywane są one do przeładowywania widoków, zlecania akcji czy przesyłania formularzy. Drugim sposobem są asynchroniczne wywołania AJAX, wykorzystane wszędzie tam, gdzie wymagana jest większa responsywność aplikacji.
 
 \subsection[Walidacja formularzy][Walidacja formularzy]{Walidacja formularzy}
-Jedną z najważniejszych części komunikacji z użytkownikiem jest walidacja wprowadzanych przez niego danych. Można ją podzielić na 2 podstawowe części:
-\begin{itemize}
-	\item walidacja po stronie klienta (opcjonalna),
-	\item walidacja po stronie serwera (obowiązkowa).
-\end{itemize}
+Jedną z najważniejszych części komunikacji z użytkownikiem jest walidacja wprowadzanych przez niego danych. W zrealizowanym systemie odbywa się ona zarówno po stronie klienta jak i po stronie serwera.
 
 \subsubsection{Walidacja po stronie klienta}
 Walidacja po stronie klienta pozwala na wyłapanie prostych błędów bez konieczności przesyłania żądania do serwera. Do takich błędów należą m. in. nie uzupełnienie jednego z wymaganych pól, czy wpisanie wartości niezgodnej z zadanym wzorcem. W aplikacji wykorzystano w tym celu komponent dijit.form.ValidationTextBox z pakietu narzędziowego Dojo oraz jego pochodne (np. dijit.form.DateTextBox służący do wprowadzania dat).
 
 \subsubsection{Walidacja po stronie serwera}
-Walidacja danych po stronie klienta nie zwalnia programisty z walidacji po stronie serwera. Nawet warunki, które teoretycznie zostały już sprawdzone, powinny po przesłaniu zostać ponownie zweryfikowane. Głównym narzędziem wykorzystanym do walidacji danych po tronie serwera jest moduł Ledge Intake. Został on opisany w rozdziale \ref{intake}. Pozwala on deklaratywne zdefiniowanie reguł, jakie powinny spełniać dane, w specjalnym pliku xml. Na wydruku \ref{intakeGroupFactory} przedstawiono fragment pliku zawierającego reguły wykorzystywane w aplikacji.
+Walidacja danych po stronie klienta nie zwalnia programisty z walidacji po stronie serwera. Nawet warunki, które teoretycznie zostały już sprawdzone, są po przesłaniu ponownie weryfikowane. Głównym narzędziem wykorzystanym do walidacji danych po tronie serwera jest moduł Ledge Intake. Został on opisany w rozdziale \ref{intake}. Pozwala on na deklaratywne zdefiniowanie reguł, jakie powinny spełniać dane, w specjalnym pliku xml. Na wydruku \ref{intakeGroupFactory} przedstawiono wybrane reguły, jakie powinny spełniać pola formularza do wprowadzania umowy. Zawierają one m. in. informacje, które z pól są wymagane oraz w jakich formatach powinny być wprowadzane daty czy wartości numeryczne.
 
-\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption=Konfiguracja modułu Intake,label={intakeGroupFactory}]
+\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption={Fragment konfiguracji modułu Intake zawierający reguły, jakie powinny spełniać pola formularza do wprowadzania umowy},label={intakeGroupFactory}]
 <?xml version="1.0" encoding="UTF-8"?>
 
 	<input-data basePackage="pl.waw.mizinski.umowy.">
 
-	<group name="PracownikIntake" key="pracownikIntake" 
-		mapToObject="intake.PracownikIntake">
-		
-		<field name="Nazwisko" key="nazwisko" type="String" displayName="Nazwisko">
-			<rule name="required" value="true">To pole jest wymagane</rule>
-		</field>
-		<field name="Plec" key="plec" type="Enum" displayName="Pierwsze imie">
-			<rule name="format" value="pl.waw.mizinski.umowy.model.enums.Plec"/>
-		</field>
-		<field name="DataUrodzenia" key="dataUrodzenia" type="DateString" 
-		displayName="Data urodzenia">
+	<group name="UmowaIntake" key="umowaIntake" mapToObject="intake.UmowaIntake">
+		...
+		<field name="DataZawarcia" key="dataZawarcia" type="DateString" 
+				displayName="Data zawarcia">
 			<rule name="required" value="true">To pole jest wymagane</rule>
 			<rule name="format" value="yyyy-MM-dd">
-			Prosze podac date w formacie dd-MM-yyyy</rule>
+				Prosze podac date w formacie yyyy-MM-dd
+			</rule>
 		</field>
-		<field name="Pesel" key="pesel" type="String" displayName="Pesel">
-			rule name="mask" value=" (^\$)| (\\d{11})">
-			Niepoprawny format numeru pesel</rule>
-		</field>
-		
-		<!-- ... -->
-		
-	</group>
-		<group name="UmowaIntake" key="umowaIntake" mapToObject="intake.UmowaIntake">
-		
-		<!-- ... -->
-		
+			...
 		<field name="Wynagrodzenie" key="wynagrodzenie" type="BigDecimal" 
-		displayName="Wynagrodznie" formatterStyle="money">
+				displayName="Wynagrodznie" formatterStyle="money">
 			<rule name="required" value="true">To pole jest wymagane</rule>
 			<rule name="invalidNumber">Wprowadzona wartosc jest niepoprawna</rule>
 		</field>
 	</group>
 	
-	<!-- ... -->
-	
 </input-data>
 \end{lstlisting}
 
-Na szczególną uwagę zasługuje pole o nazwie Wynagrodzenie. Nie został tam wskazany żaden konkretny wzorzec ale jedynie informacja, że pole należy uzupełnić w formacie właściwym dla pieniędzy. Format ten zostanie określony przez moduł Intake na podstawie ustawień regionalnych aplikacji. 
+Na szczególną uwagę zasługuje pole o nazwie Wynagrodzenie. Nie zawiera ono konkretnego wzorca, a jedynie informację, że pole należy uzupełnić w formacie właściwym dla pieniędzy. Format ten zostanie określony przez moduł Intake na podstawie ustawień regionalnych aplikacji. 
 
-Niestety nie wszystkie elementy formularza dają się walidować w sposób statyczny. Niezbędne więc stało się wprowadzenie ostatniego kroku weryfikacji danych. Został on umiejscowiony bezpośrednio w kodzie aplikacji. Walidacji takiej podlegają m. in wzajemny stosunek dat zawarcia, rozpoczęcia i zakończenia umowy, czy numery PESEL oraz NIP pracownika.
+Niestety nie wszystkie elementy formularza dają się walidować w sposób deklaratywny. Niezbędne więc stało się wprowadzenie ostatniego kroku weryfikacji danych. Został on umiejscowiony bezpośrednio w kodzie aplikacji. Walidacji takiej podlegają m. in wzajemny stosunek dat zawarcia, rozpoczęcia i zakończenia umowy, czy numery PESEL oraz NIP pracownika.
 
 \subsection[Technologia AJAX][Technologia AJAX]{Technologia AJAX}
 Technologia AJAX została opisana w rozdziale \ref{AJAX}. W aplikacji można wyróżnić 2 klasy przypadków, w których ta technologia miała zastosowanie:
@@ -273,7 +177,7 @@ Technologia AJAX została opisana w rozdziale \ref{AJAX}. W aplikacji można wyr
 	\item wymagane jest wykonanie pewnych czynności przez serwer, nie chcemy jednak aby wiązało się to z przeładowaniem widoku,
 	\item logika jaką powinna wykonać strona kliencka jest zbyt skomplikowana bądź wymaga dodatkowych danych.
 \end{itemize}
-Z pierwszą sytuacją mamy do czynienia w przypadku formularza służącego do dodawania pracownika. W klasycznym przypadku użytkownik ma możliwość wyboru z pośród dostępnych na liście urzędów skarbowych. Może się jednak zdarzyć, że szukanego urzędu na liście po prostu nie będzie. W takim przypadku ma możliwość skorzystania ze specjalnego okna dialogowego służącego do dodawania urzędu skarbowego. Ponieważ dodawanie to odbywa się w sposób asynchroniczny, formularz z danymi pracownika nie ulega przeładowaniu. Użytkownik może więc powrócić do jego edycji.
+Z pierwszą sytuacją mamy do czynienia w przypadku formularza służącego do dodawania jednostki organizacyjnej. W klasycznym przypadku użytkownik ma możliwość wyboru z pośród dostępnych na liście reprezentantów. Może się jednak zdarzyć, że szukanego reprezentanta na liście po prostu nie będzie. W takim przypadku isnieje możliwość skorzystania z okna dialogowego służącego do dodawania reprezentanta. Ponieważ dodawanie to odbywa się w sposób asynchroniczny, formularz z danymi jednostki nie ulega przeładowaniu. Użytkownik może więc powrócić do jego edycji.
 
 Z sytuacją drugiego typu spotykamy się w trakcie dodawania umowy. W zależności od tego, czy w przypadku wprowadzanej umowy są dostępne dobrowolne składki na ubezpieczenia społeczne, użytkownik może mieć możliwość zdecydowania, czy mają one zostać uwzględnione w umowie. Niestety, zależy to od zbyt wielu czynników. Komplikuje to weryfikację tego warunku po stronie klienta. Rozwiązaniem tego problemu jest sprawdzanie dostępności dobrowolnych składek za pomocą technologii AJAX. Po każdej zmianie pracownika bądź typu umowy przeglądarka wykonuje sprawdzenie w sposób asynchroniczny i na jego podstawie wyświetla bądź ukrywa część formularza odpowiedzialną za dobrowolne ubezpieczenia społeczne.
 
@@ -281,18 +185,20 @@ Z sytuacją drugiego typu spotykamy się w trakcie dodawania umowy. W zależnoś
 Widoki zostały stworzone za pomocą kodu HTML, z wykorzystaniem CSS oraz języka JavaScript. Szczególnie przydatna okazała się biblioteka Dojo.
 
 \subsection[Nawigacja][Nawigacja]{Nawigacja}
-Do nawigacji został wykorzystany komponent SecureMenu dostarczany wraz z używaną wersją biblioteki ObjectLedge. Ma on format paska znajdującego się na górze ekranu. Pozwala nie tylko na definiowanie elementów menu ale również, dzięki integracji z modułem Security, na sprawdzanie uprawnień do widoków i renderowanie tylko tych jego elementów, które użytkownik ma prawo wyświetlić.
+Do nawigacji został wykorzystany komponent SecureMenu dostarczany ze szkieletem aplikacyjnym ObjectLedge. Ma on format paska znajdującego się na górze ekranu. Pozwala nie tylko na definiowanie elementów menu ale również, dzięki integracji z modułem Security, na sprawdzanie uprawnień do widoków i renderowanie tylko tych jego elementów, które użytkownik ma prawo wyświetlić.
 
 \subsection[Dynamiczne elementy widoku][Dynamiczne elementy widoku]{Dynamiczne elementy widoku}
-Zastosowanie języka JavaScript pozwala na tworzenie dynamicznych elementów aplikacji. W aplikacji wykorzystano między innymi elementy dostarczone wraz z narzędziem Dojo Toolkit, takie jak tooltipy czy okna dialogowe. Pojawiły się również elementy własnoręcznie oskryptowane. Są nimi m. in. pojawiająca się na żądanie cześć formularza służąca do wprowadzania adresu korespondencyjnego, czy lista zadań wypełniana automatycznie w zależności od wybranej jednostki i typu zadania. Godnym uwagi elementem są też sortowane tabele zbudowane z użyciem Dojo Toolkit, dostępne w użytej wersji ObjectLedge'a.
+Zastosowanie języka JavaScript pozwala na tworzenie dynamicznych elementów aplikacji. W aplikacji wykorzystano między innymi elementy dostarczone wraz z narzędziem Dojo Toolkit, takie jak tooltipy czy okna dialogowe. Pojawiły się również elementy własnoręcznie oskryptowane. Są nimi m. in. pojawiające się na żądanie części formularza służące do wprowadzania adresów pracownika, czy lista zadań wypełniana automatycznie w zależności od wybranej jednostki i typu zadania. Godnym uwagi elementem są też sortowalne tabele zbudowane z użyciem Dojo Toolkit, dostępne wraz ze szkieletem aplikacyjnym ObjectLedge.
+
+\begin{comment}
 
 \subsection[Wygląd aplikacji][Wygląd aplikacji]{Wygląd aplikacji}
 Większość z wykorzystanych w aplikacji elementów pochodziła z pakietu dijit narzędzia Dojo Toolkit. Zaletą tego rozwiązania jest ciekawa paleta stylów pozwalająca na dostosowanie wyglądu użytych kontrolek. Z dostępnych motywów został wybrany schemat tundra łączący odcienie szarości z kolorem niebieskim. Pozostałe informacje dotyczące prezentacji danych zostały wydzielone do osobnego pliku css.
 
 \subsection[Wykorzystanie Velocity][Wykorzystanie Velocity]{Wykorzystanie Velocity}
-Do generacji dokumentów wykorzystano mechanizm Velocity. Możliwości tego mechanizmu ilustruje makro powstałe podczas tworzenia aplikacji. Zostało ono pokazane na wydruku \ref{velocity}.
+Do generacji dokumentów wykorzystano mechanizm Velocity opisany w rozdziale \ref{velocity}. Na wydruku \ref{velocity} zamieszczono wybraną definicję makra, ilustrującą możliwości tego mechanizmu.
 
-\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption=Definicja makra w Velocity,label={velocity}]
+\begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption=Wybrana definicja makra w Velocity,label={velocity}]
 #macro  (displayAddress $adres) 
 	#if  ($adres.ulica)
 		#if ($adres.miejscowosc == $adres.poczta)
@@ -311,80 +217,115 @@ Do generacji dokumentów wykorzystano mechanizm Velocity. Możliwości tego mech
 #end
 \end{lstlisting}
 
-Zadaniem powyższego makra jest wyświetlenie adresu. Adres taki może zaczynać się nazwą miejscowości (dzieje się tak, gdy nie została zdefiniowana ulica bądź miejscowość jest różna od poczty). Zostało to zrealizowane za pomocą instrukcji warunkowych \#if oraz instrukcji przypisania \#set. Innym opcjonalnym elementem adresu jest ulica. Do wyświetlenia tego elementu posłużono się konstrukcją \$!, która nie generuje wyjścia w przypadku napotkania wartości null.
+Uwagę należy zwrócić na sposób wyświetlania opcjonalnych elementów adresu. Wykorzystuje on zarówno instrukcje warunkowe \#if, jak i konstrukcję \$!, która nie generuje wyjścia w przypadku napotkania wartości null.
+%Zadaniem powyższego makra jest wyświetlenie adresu. Adres taki może zaczynać się nazwą miejscowości (dzieje się tak, gdy nie została zdefiniowana ulica bądź miejscowość jest różna od poczty). Zostało to zrealizowane za pomocą instrukcji warunkowych \#if oraz instrukcji przypisania \#set. Innym opcjonalnym elementem adresu jest ulica. Do wyświetlenia tego elementu posłużono się konstrukcją 
 
-\section[Generacja plików pdf][Generacja plików pdf]{Generacja plików pdf}
-Drukowanie do plików pdf zaimplementowano za pomocą dostarczanego razem z ObjectLedge modułu FOP (ang. \textit{Formatting Objects Processor}). Pozwala on na generację dokumentów na podstawie zdefiniowanych wcześniej w formacie xsl szablonów oraz danych zserializowanych do formatu xml. Do serializacji danych posłużył mechanizm Velocity.
+\end{comment}
+\section[Generowanie plików pdf][Generowanie plików pdf]{Generowanie plików pdf}
+Drukowanie do plików pdf zaimplementowano za pomocą dostarczanego razem ze szkieletem aplikacyjnym ObjectLedge modułu FOP (ang. \textit{Formatting Objects Processor}). Pozwala on na generowanie dokumentów na podstawie zdefiniowanych wcześniej w formacie xsl szablonów oraz danych zserializowanych do formatu xml. Do serializacji danych posłużył mechanizm Velocity.
 
-\section[Automatyczna generacja rachunków][Automatyczna generacja rachunków]{Automatyczna generacja rachunków}
-Jednym z zadań aplikacji jest automatyczna generacja rachunków do umów znajdujących się w systemie. Została ona zaimplementowana na podstawie mechanizmu schedulera narzędzia ObjectLedge. Pozwala on na definiowanie cyklicznie uruchamianych zadań, których częstotliwość można sformułować za pomocą wyrażeń unixowego demona cron \cite{cron}. 
+\section[Automatyczne generowanie rachunków][Automatyczne generowanie rachunków]{Automatyczne generowanie rachunków}
+Jednym z zadań aplikacji jest automatyczna generowanie rachunków do umów znajdujących się w systemie. Zostało ono zaimplementowane na podstawie mechanizmu schedulera narzędzia ObjectLedge. Pozwala on na definiowanie cyklicznie uruchamianych zadań, których częstotliwość można sformułować za pomocą wyrażeń unixowego demona cron \cite{cron}. 
 
 \section[Mechanizm bezpieczeństwa][Mechanizm bezpieczeństwa]{Mechanizm bezpieczeństwa}
 W aplikacji wykorzystano mechanizm bezpieczeństwa Ledge Security opisany w rozdziale \ref{security}. Uwierzytelnianie użytkowników odbywa się za pomocą identyfikatora i hasła. Przechowywane są one w lokalnej bazie danych, przy czym hasło przechowywane jest w postaci funkcji skrótu MD5. 
 
-W ramach autoryzacji przygotowane zostały role zawierające odpowiednie zbiory uprawnień. Na podstawie uprawnień określany jest m. in. dostęp do widoków czy akcji. Zostało to zrealizowane za pomocą adnotacji \texttt{@AccessCondition}. Wydruk \ref{securityAnnotations} zawiera przykład widoku, do którego dostęp możliwy jest jedynie w przypadku posiadania odpowiednich uprawnień.
+W ramach autoryzacji przygotowane zostały role zawierające odpowiednie zbiory pozwoleń. Na ich podstawie określany jest dostęp do akcji oraz widoków . Zostało to zrealizowane za pomocą adnotacji \texttt{@AccessCondition}. Wydruk \ref{securityAnnotations} zawiera widok służący do wprowadzania i edycji danych pracownika. Dostęp do niego możliwy jest jedynie dla użytkowników posiadających jedno z pozwoleń: PRACOWNIK\_C lub PRACOWNIK\_U.
 
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Dostęp do widoku zabezpieczony za pomocą adnotacji,label={securityAnnotations}]
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Dostęp do widoku edycji danych pracownika zabezpieczony za pomocą adnotacji,label={securityAnnotations}]
 @AccessConditions ({
-	@AccessCondition (auth = true, permissions = {"UMOWA_C"})
-	@AccessCondition (auth = true, permissions = {"UMOWA_U"})
+	@AccessCondition (auth = true, permissions = {"PRACOWNIK_C"})
+	@AccessCondition (auth = true, permissions = {"PRACOWNIK_U"})
 })
-public class EditUmowa extends AbstractBuilder {
+public class EditPracownik extends AbstractBuilder {
 
 	...
 
 }
 \end{lstlisting}
 
-Aby możliwe było wyświetlenie widoku opisanego powyższą klasą, użytkownik musi posiadać role zawierającą jedno z uprawnień: UMOWA\_C lub UMOWA\_U, odpowiadające operacją utworzenia oraz edycji umowy.
+Kolejnym zadaniem mechanizmu bezpieczeństwa jest zabezpieczenie, aby użytkownik mógł wykonywać operacje jedynie w obrębie wybranych jednostek organizacyjnych. W tym celu posłużono się mechanizmem grup zasobów. Obecne w systemie jednostki organizacyjne mają swoje odpowiedniki w postaci dynamicznie tworzonych grup zasobów, w ramach których są przydzielane role. W celu określenia czy użytkownik ma prawo do wykonywania operacji na danej jednostce zaimplementowano interfejs ResourceGroupRecognizer. Zostało to zaprezentowane na wydruku \ref{groupRecognizer}. Przedstawiona implementacja zwraca grupy zasobów odpowiadające danej jednostce oraz wszystkim jednostkom nadrzędnym w stosunku do niej. Pozwala to użytkownikowi na wykonywanie operacji w ramach jednostki, której jest administratorem oraz w ramach wszystkich podległych jej jednostek. 
+
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Implementacja ResourceGroupRecognizer dla jednostek organizacyjnych,label={groupRecognizer}]
+public class JednostkaGroupRecognizer implements ResourceGroupRecognizer {
+
+	...
+
+	@Override
+	public GroupSet resourceGroupByObject(Object object)
+			throws UnrecognizableResourceGroupException {
+		try {
+			if (object instanceof JednostkaOrganizacyjna) {
+				JednostkaOrganizacyjna jednostkaOrganizacyjna = 
+					(JednostkaOrganizacyjna) object;
+				return recognizeByJednostkaOrganizacyjna(jednostkaOrganizacyjna);
+			} else if (object instanceof SimpleUmowaPOJO) {
+				...
+			}
+		} catch (DataBackendException e) {
+			throw new RuntimeException(e);
+		}
+		throw new UnrecognizableResourceGroupException("Cannot recognize "
+				+ "object: " + object.getClass().getCanonicalName());
+	}
+
+	private GroupSet recognizeByJednostkaOrganizacyjna(
+			JednostkaOrganizacyjna jednostkaOrganizacyjna)
+			throws DataBackendException {
+		GroupSet groupSet = new GroupSet();
+		while (jednostkaOrganizacyjna != null) {
+			Group group = securityManager.getGroupByName(jednostkaOrganizacyjna
+					.getNazwa());
+			groupSet.add(group);
+			jednostkaOrganizacyjna = jednostkaOrganizacyjna
+					.getJednostkaNadrzedna();
+		}
+		return groupSet;
+	}
+
+	...
+
+}
+\end{lstlisting}
+
+Zabezpieczenie dostępu do akcji oraz widoków ze względu na jednostkę organizacyjną zostało zrealizowane poprzez implementację interfejsu GroupSecurityChecking. Wydruk \ref{groupSecurityChecking} zawiera akcję służącą do usuwania umowy implementującą ten interfejs. 
+
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Dostęp do akcja usuwającej umowę zabezpieczony za pomocą mechanizmu grup zasobów,label={groupSecurityChecking}]
+@AccessConditions({
+	 @AccessCondition(permissions = {"UMOWA_D"})
+})
+public class DeleteUmowa implements Valve, GroupSecurityChecking{
+
+	...
+
+	@Override
+	public GroupSet getResourceGroup(final Context context)
+			throws ProcessingException {
+		final RequestParameters requestParameters = RequestParameters
+				.getRequestParameters(context);
+		final String nrUmowy = requestParameters.get("nrUmowy");
+		final Umowa umowa = umowaDao.getById(nrUmowy);
+		final JednostkaOrganizacyjna jednostkaOrganizacyjna =
+				umowa.getJednostkaOrganizacyjna();
+		return resourceGroupRecognizer
+				.resourceGroupByObject(jednostkaOrganizacyjna);
+	}
+
+}
+\end{lstlisting}
 
 Zarządzanie użytkownikami oraz definiowanie ról i uprawnień odbywa się z poziomu GUI. Służą do tego specjalne widoki oraz akcje udostępniane wraz z modułem Ledge Security. Dostęp do nich wymaga specjalnych uprawnień zarezerwowanych jedynie dla tzw. super użytkownika.
 
 \section[Testowanie aplikacji][Testowanie aplikacji]{Testowanie aplikacji}
-Do aplikacji zostały napisane testy jednostkowe. Powstały one z wykorzystaniem biblioteki JUnit. Wydruk \ref{testDao} przestawia przykładowy fragment testu.
+Do aplikacji zostały napisane testy jednostkowe. Powstały one z wykorzystaniem biblioteki JUnit oraz bazy danych HSQLDB. W części testów konieczne okazało się wykorzystanie tzw. zaślepek (ang. \textit{mock}), czyli obiektów zastępujących w systemie obiekty docelowe. Do ich tworzenia posłużyła biblioteka Mockito. Wydruk \ref{mockito} przedstawia test akcji usuwającej umowę wykorzystujący zaślepki.
 
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Test obiektu DAO,label={testDao}]
-public class UrzadSkarbowyDaoTest extends DaoTestBase{
-	
-	private final UrzadSkarbowyDao urzadSkarbowyDao = new UrzadSkarbowyDao (context);
-	
-	@Override
-	protected void setUp () throws Exception {
-		super.setUp ();
-		executeScripts ("urzad-skarbowy.sql");
-	}
-	
-	...
-	
-	public void testGetUrzadSkarobowyByNazwa () throws Exception{	
-		UrzadSkarbowy urzadSkarbowy = urzadSkarbowyDao
-			.getById ("Urzad Skarbowy w Sochaczewie");
-		assertEquals ("Urzad Skarbowy w Sochaczewie", urzadSkarbowy.getNazwa ());
-		assertEquals ("Sochaczew", urzadSkarbowy.getMiejscowosc ());
-		assertEquals ("sochaczewska", urzadSkarbowy.getUlica ());
-		assertEquals ("1", urzadSkarbowy.getNrDomu ());
-		assertNull (urzadSkarbowy.getNrMieszkania ());
-		assertEquals ("12-345", urzadSkarbowy.getKodPocztowy ());
-		assertEquals ("Sochaczew", urzadSkarbowy.getPoczta ());
-	}
-	
-	...
-}
-\end{lstlisting}
-
-Uwagę należy zwrócić na instrukcje asercji pozwalające na weryfikację przebiegu testu.
-
-\subsection[Zaślepki][Zaślepki]{Zaślepki}
-Zaślepką (bądź namiastką, ang. \textit{Mock}) nazywamy obiekt, zastępujący w systemie obiekt docelowy. Naśladuje on zachowanie zastępowanego obiektu w sposób kontrolowany. Podczas tworzenia części testów zaistniała potrzeba wykorzystania takich właśnie obiektów. Posłużyła do tego biblioteka Mockito. Wydruk \ref{mockito} przedstawia fragment testu wykorzystującego to narzędzie.
-
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Test z użyciem zaślepek,label={mockito}]
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Test akcji usuwającej umowę wykorzystujący zaślepki,label={mockito}]
 import static org.mockito.Mockito.*;
 ...
 
 public class DeleteUmowaTest extends TestCase{
 	
 	public void testDeleteUmowa () throws Exception{
-		
 		//definicja mockow
 		String nrUmowy = "EXAMPLE";
 		UmowaDao umowaDao = mock (UmowaDao.class);
@@ -409,4 +350,4 @@ public class DeleteUmowaTest extends TestCase{
 }
 \end{lstlisting}
 
-W pierwszej części testu tworzone są zaślepki (polecenie mock) oraz definiowane jest ich zachowanie (polecenie when). Po wykonaniu testu możliwe jest zweryfikowanie jakie metody zostały wykonanie na obiekcie zaślepki. W prezentowanym przykładzie służy do tego metoda verify.
+W pierwszej części testu tworzone są zaślepki (polecenie mock) oraz definiowane jest ich zachowanie (polecenie when). Po wykonaniu testu możliwe jest zweryfikowanie, jakie metody zostały wykonanie na obiekcie zaślepki. W prezentowanym przykładzie służy do tego metoda verify.

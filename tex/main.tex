@@ -2,8 +2,8 @@
 \pdfcompresslevel=9
 \pdfinfo
 {
-    /Author (Jakub Świątkowski)
-    /Title (Aplikacja trójwarstwowa do wspierania pracy przychodni lekarskiej)
+    /Author (Konrad Miziński)
+    /Title (System wsparcia procesu obsługi umów cywilno-prawnych - aplikacja w architekturze trójwarstwowej)
     /Subject (Tematyka)
     /Keywords (Slowa kluczowe)
 }
@@ -16,6 +16,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{bookman}
+\usepackage{verbatim}
 
 \usepackage{geometry}
 \usepackage[utf8x]{inputenc}
@@ -88,7 +89,7 @@
 \newtheorem*{note}{Uwaga}
 \newtheorem{case}{Przypadek}
 
-\definecolor{ListingBackground}{rgb}{0.95,0.95,0.95}
+\definecolor{ListingBackground}{rgb}{0.96,0.96,0.96}
 \linespread{1.5}
 \setitemize[0]{itemindent=26pt,leftmargin=0pt,topsep=0pt}
 \vspace{-5mm}
@@ -188,14 +189,16 @@ framerule=0.1pt,
 
 \input {tex/1_Wprowadzenie}
 \input {tex/2_Umowy_cywilno_prawne}
-\input {tex/3_Model_funkcjonalny}
+%zamieniam kolejnosc rozdziałów
 \input {tex/4_Technologie_wykorzystane_w_aplikacji}
+\input {tex/3_Model_funkcjonalny}
 \input {tex/5_Model_danych}
 \input {tex/6_Implementacja}
 \input {tex/7_Podsumowanie}
 
 \appendix
 
+\input {tex/Makiety}
 \input {tex/Wyglad_aplikacji}
 
 % tutaj załączniki

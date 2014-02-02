@@ -1,0 +1,6 @@
+%do opisu przypadków użycia
+\newcommand\addrow[2]{\textbf{#1} &#2\\ }
+\newcommand\addheading[2]{\textbf{#1} &#2\\ \hline}
+\newcommand\tabularhead{\begin{tabular}{lp{8cm}}  }
+\newcommand\addmulrow[2]{ \begin{minipage}[t][][t]{0.5cm}\textbf{#1}\end{minipage} &\begin{minipage}[t][][t]{8cm}\begin{enumerate} #2 \end{enumerate}\end{minipage}\\ }
+\newenvironment{usecase[1]}{\subsubsection{#1} \tabularhead}{\end{tabular}}
