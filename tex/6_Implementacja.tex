@@ -1,14 +1,14 @@
 \chapter{Implementacja}
 \label{chap6}
 
-\section{Baza danych}
+\section{Warstwa trwałości danych}
 Warstwa obiektów trwałych została oparta na systemie PostgreSQL. Schemat danych powstał na podstawie modelu opisanego w rozdziale \ref{modelFizyczny}. Oprócz definicji tabel zawiera on również sekwencje służące do generowania sztucznych kluczy głównych. Dla kolumn zawierających wartości wyliczeniowe (takich jak płeć mogąca przyjmować jedną z 2 wartości) zdefiniowano więzy kontrolne za pomocą klauzul check.
 
 \section{Dostęp do danych}
 Dostęp do danych został zrealizowany przy użyciu narzędzia Hibernate z wykorzystaniem wzorca DAO oraz obiektów POJO.
 
 \subsection[Hibernate][Hibernate]{Hibernate} 
-Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. Mapowanie obiektowo-relacyjne wykonano przy pomocy plików hbm.xml. Na wydruku \ref{adresHbm} przedstawiono fragment pliku zawierającego mapowanie tabeli Adres pracownika.
+Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. W stworzonej aplikacji mapowanie obiektowo-relacyjne zostało wykonane przy pomocy plików hbm.xml. Ciekawym tego przykładem jest tabela adres pracownika, której odwzorowanie na obiekt języka Java przedstawiono na wydruku \ref{adresHbm}. Pozwala ona na posiadanie przez pracownika trzech adresów (zameldowania, zamieszkania i korespondencyjnego). Odzwierciedla to jej klucz główny, składający się z klucza obcego, odwzorowanego na klasę Pracownik oraz kolumny typ adresu odwzorowanej na typ wyliczeniowy.
 
 \begin{lstlisting}[language=XML,style=outcode,showstringspaces=false, caption=Mapowanie tabeli Adres pracownika w postaci pliku hbm.xml,label={adresHbm}]
 <?xml version="1.0"?>
@@ -19,13 +19,13 @@ Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. Mapowanie ob
 				class="pl.waw.mizinski.umowy.model.AdresPracownikaPK">
 			<key-many-to-one name="pracownik" 
 					class="pl.waw.mizinski.umowy.model.Pracownik">
-				<column name="pracownik" sql-type="int4"/>
+				<column name="id_pracownika" sql-type="int4"/>
 			</key-many-to-one>
 			<key-property name="typAdresu" column="typ_adresu">
 				<type name="org.hibernate.type.EnumType">
 					<param name="enumClass">
 						pl.waw.mizinski.umowy.model.enums.TypAdresu
-				</param>
+					</param>
 					<param name="type">12</param>
 				</type>
 			</key-property>
@@ -43,7 +43,7 @@ Technologa Hibernate została opisana w rozdziale. \ref{hibernate}. Mapowanie ob
 </hibernate-mapping>
 \end{lstlisting}
 
-Tabela ta pozwala na posiadanie przez pracownika trzech adresów (zameldowania, zamieszkania i korespondencyjnego). Odzwierciedla to jej klucz główny. Składa się on z klucza obcego, odwzorowanego na klasę Pracownik oraz kolumny typ adresu odwzorowanej na typ wyliczeniowy. 
+ 
 
 
 \subsection[Obiekty DAO][Obiekty DAO]{Obiekty DAO}
@@ -98,7 +98,7 @@ Przedstawiona klasa jest klasą generyczną. Parametryzowana jest dwoma typami d
 
 \subsection[Obiekty POJO][Obiekty POJO]{Obiekty POJO}
 Oprócz metod dziedziczonych z klasy bazowej, obiekty DAO posiadają też metody służące do odczytu danych w postaci obiektów POJO (ang. \textit{Plain Old Java Object}).
-Obiekty takie posiadają jedynie konstruktor oraz metody odczytujące wartości ich pól. Najczęstszym zastosowaniem obiektów POJO w aplikacji jest przekazywanie ich do mechanizmu Velocity w celu przygotowania widoku.
+Obiekty takie posiadają jedynie konstruktor oraz metody odczytujące wartości ich pól. Zostały one wykorzystane do komunikacji z mechanizmem Velocity, odpowiadającym za przygotowywanie widoków.
 
 \begin{comment}
 Metody bazowej klasy DAO zwracają obiekty trwałe. Powoduje to często niepotrzebny narzut wydajnościowy. Rozwiązaniem tego problemu jest wykorzystanie, niepowiązanych z sesją Hibernate, obiektów POJO (ang. \textit{Plain Old Java Object}). Wydruk \ref{pojo} zawiera metodę DAO zwracającą listę obiektów POJO opisujących umowę. Metoda ta dokonuje złączenia tabel już na etapie zapytania HQL.
@@ -137,10 +137,13 @@ Użytkownik komunikuje się z systemem na dwa sposoby. Pierwszym z nich są sync
 Jedną z najważniejszych części komunikacji z użytkownikiem jest walidacja wprowadzanych przez niego danych. W zrealizowanym systemie odbywa się ona zarówno po stronie klienta jak i po stronie serwera.
 
 \subsubsection{Walidacja po stronie klienta}
-Walidacja po stronie klienta pozwala na wyłapanie prostych błędów bez konieczności przesyłania żądania do serwera. Do takich błędów należą m. in. nie uzupełnienie jednego z wymaganych pól, czy wpisanie wartości niezgodnej z zadanym wzorcem. W aplikacji wykorzystano w tym celu komponent dijit.form.ValidationTextBox z pakietu narzędziowego Dojo oraz jego pochodne (np. dijit.form.DateTextBox służący do wprowadzania dat).
+Walidację po stronie klienta ograniczono do prostych błędów, takich jak nie uzupełnienie jednego z wymaganych pól, czy wpisanie wartości niezgodnej z zadanym wzorcem.
+Wykorzystano w tym celu komponent dijit.form.ValidationTextBox z pakietu narzędziowego Dojo oraz jego pochodne (np. dijit.form.DateTextBox służący do wprowadzania dat).
+
+%Walidacja po stronie klienta pozwala na wyłapanie prostych błędów bez konieczności przesyłania żądania do serwera. Do takich błędów należą m. in. nie uzupełnienie jednego z wymaganych pól, czy wpisanie wartości niezgodnej z zadanym wzorcem. W aplikacji wykorzystano w tym celu komponent dijit.form.ValidationTextBox z pakietu narzędziowego Dojo oraz jego pochodne (np. dijit.form.DateTextBox służący do wprowadzania dat).
 
 \subsubsection{Walidacja po stronie serwera}
-Walidacja danych po stronie klienta nie zwalnia programisty z walidacji po stronie serwera. Nawet warunki, które teoretycznie zostały już sprawdzone, są po przesłaniu ponownie weryfikowane. Głównym narzędziem wykorzystanym do walidacji danych po tronie serwera jest moduł Ledge Intake. Został on opisany w rozdziale \ref{intake}. Pozwala on na deklaratywne zdefiniowanie reguł, jakie powinny spełniać dane, w specjalnym pliku xml. Na wydruku \ref{intakeGroupFactory} przedstawiono wybrane reguły, jakie powinny spełniać pola formularza do wprowadzania umowy. Zawierają one m. in. informacje, które z pól są wymagane oraz w jakich formatach powinny być wprowadzane daty czy wartości numeryczne.
+Walidacja danych po stronie klienta nie zwalnia programisty z walidacji po stronie serwera. Nawet warunki, które teoretycznie zostały już sprawdzone, są po przesłaniu ponownie weryfikowane. Głównym narzędziem wykorzystanym do walidacji danych po stronie serwera jest moduł Ledge Intake. Został on opisany w rozdziale \ref{intake}. Pozwala on na deklaratywne zdefiniowanie reguł, jakie powinny spełniać dane, w specjalnym pliku xml. Na wydruku \ref{intakeGroupFactory} przedstawiono część reguł, które powinny spełniać pola formularza do wprowadzania umowy. Zawierają one m. in. informacje, które z pól są wymagane oraz w jakich formatach powinny być wprowadzane daty czy wartości numeryczne. Na szczególną uwagę zasługuje pole o nazwie Wynagrodzenie. Nie zawiera ono konkretnego wzorca, a jedynie informację, że pole to należy uzupełnić w formacie właściwym dla pieniędzy. Format ten zostanie określony przez moduł Intake na podstawie ustawień regionalnych aplikacji. 
 
 \begin{lstlisting}[language=XML,style=outcode,showstringspaces=false,caption={Fragment konfiguracji modułu Intake zawierający reguły, jakie powinny spełniać pola formularza do wprowadzania umowy},label={intakeGroupFactory}]
 <?xml version="1.0" encoding="UTF-8"?>
@@ -167,8 +170,6 @@ Walidacja danych po stronie klienta nie zwalnia programisty z walidacji po stron
 </input-data>
 \end{lstlisting}
 
-Na szczególną uwagę zasługuje pole o nazwie Wynagrodzenie. Nie zawiera ono konkretnego wzorca, a jedynie informację, że pole należy uzupełnić w formacie właściwym dla pieniędzy. Format ten zostanie określony przez moduł Intake na podstawie ustawień regionalnych aplikacji. 
-
 Niestety nie wszystkie elementy formularza dają się walidować w sposób deklaratywny. Niezbędne więc stało się wprowadzenie ostatniego kroku weryfikacji danych. Został on umiejscowiony bezpośrednio w kodzie aplikacji. Walidacji takiej podlegają m. in wzajemny stosunek dat zawarcia, rozpoczęcia i zakończenia umowy, czy numery PESEL oraz NIP pracownika.
 
 \subsection[Technologia AJAX][Technologia AJAX]{Technologia AJAX}
@@ -181,7 +182,7 @@ Z pierwszą sytuacją mamy do czynienia w przypadku formularza służącego do d
 
 Z sytuacją drugiego typu spotykamy się w trakcie dodawania umowy. W zależności od tego, czy w przypadku wprowadzanej umowy są dostępne dobrowolne składki na ubezpieczenia społeczne, użytkownik może mieć możliwość zdecydowania, czy mają one zostać uwzględnione w umowie. Niestety, zależy to od zbyt wielu czynników. Komplikuje to weryfikację tego warunku po stronie klienta. Rozwiązaniem tego problemu jest sprawdzanie dostępności dobrowolnych składek za pomocą technologii AJAX. Po każdej zmianie pracownika bądź typu umowy przeglądarka wykonuje sprawdzenie w sposób asynchroniczny i na jego podstawie wyświetla bądź ukrywa część formularza odpowiedzialną za dobrowolne ubezpieczenia społeczne.
 
-\section[Tworzenie widoku][Tworzenie widoku]{Tworzenie widoku}
+\section[Tworzenie widoków][Tworzenie widoków]{Tworzenie widoków}
 Widoki zostały stworzone za pomocą kodu HTML, z wykorzystaniem CSS oraz języka JavaScript. Szczególnie przydatna okazała się biblioteka Dojo.
 
 \subsection[Nawigacja][Nawigacja]{Nawigacja}
@@ -222,7 +223,7 @@ Uwagę należy zwrócić na sposób wyświetlania opcjonalnych elementów adresu
 
 \end{comment}
 \section[Generowanie plików pdf][Generowanie plików pdf]{Generowanie plików pdf}
-Drukowanie do plików pdf zaimplementowano za pomocą dostarczanego razem ze szkieletem aplikacyjnym ObjectLedge modułu FOP (ang. \textit{Formatting Objects Processor}). Pozwala on na generowanie dokumentów na podstawie zdefiniowanych wcześniej w formacie xsl szablonów oraz danych zserializowanych do formatu xml. Do serializacji danych posłużył mechanizm Velocity.
+Drukowanie do plików pdf zaimplementowano za pomocą dostarczanej wraz ze szkieletem aplikacyjnym ObjectLedge biblioteki FOP (ang. \textit{Formatting Objects Processor}). Pozwala ona na generowanie dokumentów na podstawie zdefiniowanych wcześniej w formacie xsl szablonów oraz danych zserializowanych do formatu xml. Do serializacji danych posłużył mechanizm Velocity.
 
 \section[Automatyczne generowanie rachunków][Automatyczne generowanie rachunków]{Automatyczne generowanie rachunków}
 Jednym z zadań aplikacji jest automatyczna generowanie rachunków do umów znajdujących się w systemie. Zostało ono zaimplementowane na podstawie mechanizmu schedulera narzędzia ObjectLedge. Pozwala on na definiowanie cyklicznie uruchamianych zadań, których częstotliwość można sformułować za pomocą wyrażeń unixowego demona cron \cite{cron}. 
@@ -290,7 +291,7 @@ public class JednostkaGroupRecognizer implements ResourceGroupRecognizer {
 
 Zabezpieczenie dostępu do akcji oraz widoków ze względu na jednostkę organizacyjną zostało zrealizowane poprzez implementację interfejsu GroupSecurityChecking. Wydruk \ref{groupSecurityChecking} zawiera akcję służącą do usuwania umowy implementującą ten interfejs. 
 
-\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Dostęp do akcja usuwającej umowę zabezpieczony za pomocą mechanizmu grup zasobów,label={groupSecurityChecking}]
+\begin{lstlisting}[language=Java,style=outcode,showstringspaces=false,caption=Dostęp do akcji usuwającej umowę zabezpieczony za pomocą mechanizmu grup zasobów,label={groupSecurityChecking}]
 @AccessConditions({
 	 @AccessCondition(permissions = {"UMOWA_D"})
 })
@@ -325,26 +326,26 @@ import static org.mockito.Mockito.*;
 
 public class DeleteUmowaTest extends TestCase{
 	
-	public void testDeleteUmowa () throws Exception{
+	public void testDeleteUmowa() throws Exception{
 		//definicja mockow
 		String nrUmowy = "EXAMPLE";
-		UmowaDao umowaDao = mock (UmowaDao.class);
-		DeleteUmowa deleteUmowa = new DeleteUmowa (umowaDao);
-		RequestParameters requestParameters = mock (RequestParameters.class);
-		when (requestParameters.get ("nrUmowy")).thenReturn (nrUmowy);
-		Context context = mock (Context.class);
-		when (context.getAttribute (RequestParameters.class))
+		UmowaDao umowaDao = mock(UmowaDao.class);
+		DeleteUmowa deleteUmowa = new DeleteUmowa(umowaDao);
+		RequestParameters requestParameters = mock(RequestParameters.class);
+		when(requestParameters.get("nrUmowy")).thenReturn(nrUmowy);
+		Context context = mock(Context.class);
+		when(context.getAttribute(RequestParameters.class))
 			.thenReturn (requestParameters);
 		Session session = mock (Session.class);
-		when (session.beginTransaction ()).thenReturn (mock (Transaction.class));
-		when (context.getAttribute (HibernateSessionContext.class))
-			.thenReturn (new HibernateSessionContext (session));
+		when(session.beginTransaction()).thenReturn(mock(Transaction.class));
+		when(context.getAttribute(HibernateSessionContext.class))
+			.thenReturn(new HibernateSessionContext(session));
 		
 		//testowana metoda
-		deleteUmowa.process (context);
+		deleteUmowa.process(context);
 		
 		//weryfikacja
-		verify (umowaDao).remove (nrUmowy);
+		verify(umowaDao).remove(nrUmowy);
 		
 	}
 }

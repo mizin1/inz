@@ -6,21 +6,21 @@ Jednym z pierwszych etapów projektowania systemów informatycznych jest stworze
 
 \begin{figure}[tdh]
     \begin{center}
-	\includegraphics[scale=.8]{img/logiczny1.png}
+	\includegraphics[scale=1]{img/logiczny1.png}
 	\caption{Model związków encji opisujący strukturę organizacyjną instytucji}
 	\label{logiczny1}
     \end{center}
 \end{figure}
-\begin{figure}[tdh]
+\begin{figure}[]
     \begin{center}
-	\includegraphics[scale=.8]{img/logiczny2.png}
+	\includegraphics[scale=1]{img/logiczny2.png}
 	\caption{Model związków encji opisujący pracownika}
 	\label{logiczny2}
     \end{center}
 \end{figure}
 \begin{figure}[]
     \begin{center}
-	\includegraphics[scale=.8,angle=-90]{img/logiczny3.png}
+	\includegraphics[scale=1,angle=-90]{img/logiczny3.png}
 	\caption{Model związków encji opisujący umowę}
 	\label{logiczny3}
     \end{center}
@@ -45,7 +45,7 @@ W przypadku tak skonstruowanej encji udało się znaleźć naturalny identyfikat
 Jest to encja słownikowa. Pojawiła się w systemie z dwóch powodów. Pierwszym z nich jest konieczność przechowywania informacji o obywatelstwie pracownika  (stąd związek ,,obywatelstwo''). Drugim powodem jest obecność państwa w adresie. Atrybutami państwa są jego nazwa (np. Polska) oraz nazwa obywatelstwa (np. polskie). Jako unikalny identyfikator państwa wybrano dwuliterowy kod ISO-3166-1\cite{panstwa} (np. PL).
 
 \subsubsection{Urząd Skarbowy}
-Encja ta opisuje urząd skarbowy właściwy dla pracownika. Podstawowym jej atrybutem jest nazwa. Pełni ona funkcję unikalnego identyfikatora tej encji. Zawiera ona zazwyczaj informacje o miejscowości oraz numerze urzędu skarbowego (np. Pierwszy Urząd Skarbowy w Lublinie). Nie jest to jednak regułą. Zdarza się, że zamiast numeru występuje nazwa dzielnicy czy nazwa własna urzędu skarbowego. Niemożliwym stało się więc rozbicie tego atrybutu na mniejsze części (w szczególności wyodrębnienie atrybutu numer urzędu skarbowego). Pozostałymi atrybutami urzędu skarbowego są dane adresowe, czyli miejscowość, ulica, numer domu, numer mieszkania, kod pocztowy i poczta.
+Urząd skarbowy właściwy dla pracownika. Podstawowym jego atrybutem jest nazwa. Pełni ona funkcję unikalnego identyfikatora tej encji. Zawiera ona zazwyczaj informacje o miejscowości oraz numerze urzędu skarbowego (np. Pierwszy Urząd Skarbowy w Lublinie). Nie jest to jednak regułą. Zdarza się, że zamiast numeru występuje nazwa dzielnicy czy nazwa własna urzędu skarbowego. Niemożliwym stało się więc rozbicie tego atrybutu na mniejsze części (w szczególności wyodrębnienie atrybutu numer urzędu skarbowego). Pozostałymi atrybutami urzędu skarbowego są dane adresowe, czyli miejscowość, ulica, numer domu, numer mieszkania, kod pocztowy i poczta.
 
 \subsubsection{Status pracownika}
 Encja ta opisuje status pracownika w świetle obowiązków odprowadzania składek na różnego rodzaju ubezpieczenia i fundusze. Przykłady takich statusów zostały opisane w sekcji \ref{przykladyOsob}. Atrybutami tej encji są nazwa oraz opis. Nazwa jest ponadto jej unikalnym identyfikatorem.
@@ -92,21 +92,21 @@ Kolejnym etapem pracy nad projektem jest stworzenie schematu tabel. Powstaje on 
 
 \begin{figure}[tdh]
     \begin{center}
-	\includegraphics[scale=.8]{img/fizyczny1.png}
+	\includegraphics[scale=1]{img/fizyczny1.png}
 	\caption{Schemat tabel opisujący strukturę organizacyjną instytucji}
 	\label{fizyczny1}
     \end{center}
 \end{figure}
 \begin{figure}[tdh]
     \begin{center}
-	\includegraphics[scale=.8]{img/fizyczny2.png}
+	\includegraphics[scale=1]{img/fizyczny2.png}
 	\caption{Schemat tabel opisujący pracownika}
 	\label{fizyczny2}
     \end{center}
 \end{figure}
 \begin{figure}[tdh]
     \begin{center}
-	\includegraphics[scale=.8,angle=-90]{img/fizyczny3.png}
+	\includegraphics[scale=1,angle=-90]{img/fizyczny3.png}
 	\caption{Schemat tabel opisujący umowę}
 	\label{fizyczny3}
     \end{center}

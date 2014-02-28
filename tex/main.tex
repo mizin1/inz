@@ -89,7 +89,9 @@
 \newtheorem*{note}{Uwaga}
 \newtheorem{case}{Przypadek}
 
-\definecolor{ListingBackground}{rgb}{0.96,0.96,0.96}
+\definecolor{ListingBackground}{rgb}{1,1,1}
+\definecolor{keyWords}{rgb}{0.5,0,0.33}
+\definecolor{comments}{rgb}{0.4,0.4,0.4}
 \linespread{1.5}
 \setitemize[0]{itemindent=26pt,leftmargin=0pt,topsep=0pt}
 \vspace{-5mm}
@@ -108,8 +110,8 @@
 \lstdefinestyle{incode}
 {
 basicstyle={\footnotesize},
-keywordstyle={\bf\footnotesize\color{blue}},
-commentstyle={\em\footnotesize\color{magenta}},
+keywordstyle={\bf\footnotesize\color{keyWords}},
+commentstyle={\em\footnotesize\color{comments}},
 numbers=left,
 stepnumber=5,
 firstnumber=1,
@@ -138,8 +140,8 @@ framerule=0pt,
 \lstdefinestyle{outcode}
 {
 basicstyle={\footnotesize},
-keywordstyle={\bf\footnotesize\color{blue}},
-commentstyle={\em\footnotesize\color{magenta}},
+keywordstyle={\bf\footnotesize\color{keyWords}},
+commentstyle={\em\footnotesize\color{comments}},
 numbers=left,
 stepnumber=5,
 firstnumber=1,
